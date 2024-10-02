@@ -4,6 +4,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}", // Add Flowbite components
   ],
   darkMode: "class",
   theme: {
@@ -47,6 +48,12 @@ module.exports = {
         stroke: "#E3E8EF",
         "stroke-dark": "#353943",
         "bg-color-dark": "#171C28",
+        dashcolor: "#40189D",
+        dashcard1: "#4E36E2",
+        dashcard2: "#48A9F8",
+        dashcard3: "#1BD084",
+        dashcard4: "#8BC740",
+        planInactive: "#E7DDFF",
       },
 
       boxShadow: {
@@ -68,5 +75,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
