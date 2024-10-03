@@ -23,7 +23,7 @@ const Hero = () => {
                   AI-driven platform, designed to automate social media and
                   mailing campaigns. Engage your audience like never before
                   using lifelike, interactive avatars that communicate in
-                  multiple languages. Whether you're targeting a global market
+                  multiple languages. Whether you are targeting a global market
                   or creating personalized content, our solution delivers
                   intelligent, multilingual interactions that captivate and
                   convert.
