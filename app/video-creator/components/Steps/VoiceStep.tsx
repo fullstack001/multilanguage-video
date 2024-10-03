@@ -105,7 +105,7 @@ const VoiceStep = ({
     setIsCreatingAudio(true);
     try {
       const audioUrl = await createAudio(selectedVoice, videoData.content);
-      setCreatedAudioUrl(audioUrl);
+      setCreatedAudioUrl(`${API_URL}/api/get-audio/${audioUrl}`);
     } catch (error) {
       console.error("Error creating audio:", error);
     } finally {
@@ -118,10 +118,7 @@ const VoiceStep = ({
       if (isPreviewPlaying) {
         handleStopAudio();
       } else {
-        handlePlayAudio(
-          `${API_URL}/api/get-audio/${createdAudioUrl}`,
-          "preview",
-        );
+        handlePlayAudio(createdAudioUrl, "preview");
       }
       setIsPreviewPlaying(!isPreviewPlaying);
     }
