@@ -19,7 +19,6 @@ export const getVoice = async (): Promise<Voice[]> => {
   return data;
 };
 
-
 export const getBackgroundUrls = async (): Promise<Background[]> => {
   const response = await fetch(`${API_URL}/api/video-create/get-backgrounds`);
   const data = await response.json();
@@ -29,13 +28,36 @@ export const getBackgroundUrls = async (): Promise<Background[]> => {
 
 export const createAudio = async (
   voice: Voice,
-  content: string,
+  text: string,
 ): Promise<string> => {
-  const response = await axios.post(`${API_URL}/api/video-create/create-audio`, {
-    voice,
-    content,
-  });
-  return response.data.audioUrl;
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/video-create/create-audio`,
+      {
+        voice: voice,
+        content: text,
+      },
+    );
+    return response.data.audioUrl;
+  } catch (error) {
+    console.error("Error creating audio:", error);
+    throw error;
+  }
+};
+
+export const combineAudio = async (audioUrls: string[]): Promise<string> => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/video-create/combine-audio`,
+      {
+        audioUrls: audioUrls,
+      },
+    );
+    return response.data.combinedAudioUrl;
+  } catch (error) {
+    console.error("Error combining audio:", error);
+    throw error;
+  }
 };
 
 export const createVideo = async (videoData: {}): Promise<{

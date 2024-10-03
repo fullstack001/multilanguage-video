@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
 import { Voice } from "@/types/Voice";
-import { getVoice, createAudio } from "@/lib/api/videoCreate";
+import { getVoice, createAudio, combineAudio } from "@/lib/api/videoCreate";
 import { FaPlayCircle, FaStopCircle } from "react-icons/fa"; // Import play and stop icons
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -41,6 +41,7 @@ const VoiceStep = ({
   const [isPlaying, setIsPlaying] = useState<string | null>(null); // Track the ID of the currently playing voice
   const [createdAudioUrl, setCreatedAudioUrl] = useState<string | null>(null);
   const [isCreatingAudio, setIsCreatingAudio] = useState(false);
+  const [creationProgress, setCreationProgress] = useState(0);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
 
   useEffect(() => {
@@ -100,16 +101,38 @@ const VoiceStep = ({
     }
   };
 
+  const splitContent = (content: string, chunkSize: number): string[] => {
+    let chunks = [];
+    if (content.length > 450) {
+      for (let i = 0; i < content.length; i += chunkSize) {
+        chunks.push(content.slice(i, i + chunkSize));
+      }
+    } else {
+      chunks = [content];
+    }
+    return chunks;
+  };
+
   const handleCreateAudio = async () => {
     if (!selectedVoice || !videoData.content) return;
     setIsCreatingAudio(true);
+    setCreationProgress(0);
     try {
-      const audioUrl = await createAudio(selectedVoice, videoData.content);
+      const chunks = splitContent(videoData.content, 450);
+      const audioUrls = [];
+      for (let i = 0; i < chunks.length; i++) {
+        const chunkUrl = await createAudio(selectedVoice, chunks[i]);
+        audioUrls.push(chunkUrl);
+        setCreationProgress(((i + 1) / chunks.length) * 100);
+      }
+      const audioUrl = await combineAudio(audioUrls);
+
       setCreatedAudioUrl(`${API_URL}/api/get-audio/${audioUrl}`);
     } catch (error) {
       console.error("Error creating audio:", error);
     } finally {
       setIsCreatingAudio(false);
+      setCreationProgress(0);
     }
   };
 
@@ -168,7 +191,9 @@ const VoiceStep = ({
           onClick={handleCreateAudio}
           disabled={!selectedVoice || isCreatingAudio}
         >
-          {isCreatingAudio ? "Creating..." : "Create Audio"}
+          {isCreatingAudio
+            ? `Creating... ${creationProgress.toFixed(0)}%`
+            : "Create Audio"}
         </button>
         <button
           className="flex items-center rounded-xl bg-green-500 px-4 py-2 text-white disabled:bg-gray-400"
