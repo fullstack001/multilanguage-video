@@ -101,15 +101,22 @@ const VoiceStep = ({
     }
   };
 
-  const splitContent = (content: string, chunkSize: number): string[] => {
-    let chunks = [];
-    if (content.length > 450) {
-      for (let i = 0; i < content.length; i += chunkSize) {
-        chunks.push(content.slice(i, i + chunkSize));
+  const splitContent = (content: string): string[] => {
+    const sentences = content.match(/[^.!?]+[.!?]+/g) || [];
+    const chunks: string[] = [];
+    let currentChunk = "";
+
+    for (const sentence of sentences) {
+      if (currentChunk.length + sentence.length < 500) {
+        currentChunk += sentence;
+      } else {
+        if (currentChunk) chunks.push(currentChunk.trim());
+        currentChunk = sentence;
       }
-    } else {
-      chunks = [content];
     }
+
+    if (currentChunk) chunks.push(currentChunk.trim());
+
     return chunks;
   };
 
@@ -118,7 +125,8 @@ const VoiceStep = ({
     setIsCreatingAudio(true);
     setCreationProgress(0);
     try {
-      const chunks = splitContent(videoData.content, 450);
+      const chunks = splitContent(videoData.content);
+      console.log(chunks);
       const audioUrls = [];
       for (let i = 0; i < chunks.length; i++) {
         const chunkUrl = await createAudio(selectedVoice, chunks[i]);
