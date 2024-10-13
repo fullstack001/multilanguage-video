@@ -1,73 +1,69 @@
-// lib/api/auth.ts
-import axios from "axios";
-import { Avatar } from "@/types/Avatar";
-import { Voice } from "@/types/Voice";
-import { Background } from "@/types/Background";
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import axiosInstance from "./axios";
+import { VideoStatus } from "@/types/VideoStatus";
+// Import the signOut function from your authentication library
+import { logout } from "@/lib/api/auth"; // Adjust the import path as needed
 
-// Signup function using Axios and the proxy to /api/signup
-export const getAvatar = async (): Promise<Avatar[]> => {
-  // Replace this with your actual API call
-  const response = await fetch(`${API_URL}/api/video-create/get-avatars`);
-  const data = await response.json();
-  return data.presenters; // Assuming the API response has an avatars array
+const handleApiError = (error: any) => {
+  if (error.response && error.response.status === 401) {
+    console.error("Unauthorized access, signing out...");
+    logout();
+  } else {
+    console.error("API error:", error.message || "Unknown error occurred");
+  }
+  throw error;
 };
 
-export const getVoice = async (): Promise<Voice[]> => {
-  const response = await fetch(`${API_URL}/api/video-create/get-voices`);
-  const data = await response.json();
-  return data;
-};
-
-export const getBackgroundUrls = async (): Promise<Background[]> => {
-  const response = await fetch(`${API_URL}/api/video-create/get-backgrounds`);
-  const data = await response.json();
-  console.log(data.photos);
-  return data.photos;
-};
-
-export const createAudio = async (
-  voice: Voice,
-  text: string,
-): Promise<string> => {
+export const getBackgroundUrls = async (): Promise<string[]> => {
   try {
-    const response = await axios.post(
-      `${API_URL}/api/video-create/create-audio`,
-      {
-        voice: voice,
-        content: text,
-      },
+    const response = await axiosInstance.get(
+      "/api/video-create/get-backgrounds",
     );
-    return response.data.audioUrl;
+    return response.data;
   } catch (error) {
-    console.error("Error creating audio:", error);
-    throw error;
+    handleApiError(error);
   }
 };
 
-export const combineAudio = async (audioUrls: string[]): Promise<string> => {
+export const translateContent = async ({
+  text,
+  targetLanguage,
+}: {
+  text: string;
+  targetLanguage: string;
+}): Promise<string> => {
   try {
-    const response = await axios.post(
-      `${API_URL}/api/video-create/combine-audio`,
-      {
-        audioUrls: audioUrls,
-      },
-    );
-    return response.data.combinedAudioUrl;
+    const response = await axiosInstance.post("/api/video-create/translate", {
+      text,
+      targetLanguage,
+    });
+    return response.data.translated;
   } catch (error) {
-    console.error("Error combining audio:", error);
-    throw error;
+    handleApiError(error);
   }
 };
 
 export const createVideo = async (videoData: {}): Promise<{
-  videoUrl: string;
+  resultData: VideoStatus;
 }> => {
-  const response = await axios.post(
-    `${API_URL}/api/video-create/create-video`,
-    videoData,
-  );
-  const data = await response.data;
-  console.log(data.data);
-  return data;
+  try {
+    const response = await axiosInstance.post(
+      "/api/video-create/create-video",
+      videoData,
+    );
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
 };
+
+export const translateVideo = async (id: string, targetLanguage: string) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/video-create/translate-video",
+      { id, targetLanguage },
+    );
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};  

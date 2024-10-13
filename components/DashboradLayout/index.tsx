@@ -9,14 +9,19 @@ import menuData from "./menuData";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [openSubmenuId, setOpenSubmenuId] = useState<number | null>(null);
 
-  const usePathName = usePathname();
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   if (!isMounted) return null;
+
+  const toggleSubmenu = (id: number) => {
+    setOpenSubmenuId(openSubmenuId === id ? null : id);
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -31,15 +36,43 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
         <nav className="mt-4 flex-1 space-y-2 px-4">
           {menuData.map((item) => (
-            <Link href={item.path} key={item.id}>
-              <div
-                className={`block rounded px-4 py-2.5 transition duration-200 hover:bg-purple-600 ${
-                  usePathName === item.path ? "bg-purple-600" : ""
-                }`}
-              >
-                {item.title}
-              </div>
-            </Link>
+            <div key={item.id}>
+              {item.submenu ? (
+                <div
+                  onClick={() => toggleSubmenu(item.id)}
+                  className={`block cursor-pointer rounded px-4 py-2.5 transition duration-200 hover:bg-purple-600 ${
+                    pathname.startsWith(item.path) ? "bg-purple-600" : ""
+                  }`}
+                >
+                  {item.title}
+                </div>
+              ) : (
+                <Link href={item.path}>
+                  <div
+                    className={`block cursor-pointer rounded px-4 py-2.5 transition duration-200 hover:bg-purple-600 ${
+                      pathname === item.path ? "bg-purple-600" : ""
+                    }`}
+                  >
+                    {item.title}
+                  </div>
+                </Link>
+              )}
+              {item.submenu && openSubmenuId === item.id && (
+                <div className="ml-4 mt-2 space-y-2">
+                  {item.submenu.map((subItem) => (
+                    <Link href={subItem.path} key={subItem.id}>
+                      <div
+                        className={`block rounded px-4 py-2 transition duration-200 hover:bg-purple-600 ${
+                          pathname === subItem.path ? "bg-purple-600" : ""
+                        }`}
+                      >
+                        {subItem.title}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
       </aside>

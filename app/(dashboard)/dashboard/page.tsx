@@ -1,10 +1,14 @@
+"use client";
+
 import Card from "./components/Card";
 import DiskUsage from "./components/DiskUsage";
 import VideoHistoryChart from "./components/VideoHistoryChart";
 import { FiUsers, FiFile, FiCheckCircle, FiFilm } from "react-icons/fi";
 import RecentVideos from "./components/RecentVideos";
+import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 
 const DashboardPage = () => {
+  useAuthCheck();
   return (
     <>
       <div className="mb-3 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

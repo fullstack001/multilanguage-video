@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Loading from "@/components/Loading"; // Assume you have the loading spinner component
-import { Background } from "@/types/Background";
+import Loading from "@/components/Loading";
 import { getBackgroundUrls } from "@/lib/api/videoCreate";
 
 const BackgroundStep = ({
   onNext,
   onPrev,
 }: {
-  onNext: (background: { background: Background }) => void;
-  onPrev: (background: { background: Background }) => void;
+  onNext: (background: { background: string }) => void;
+  onPrev: (background: { background: string }) => void;
 }) => {
-  const [backgrounds, setBackgrounds] = useState<Background[]>([]);
-  const [selectedBackground, setSelectedBackground] =
-    useState<Background | null>(null);
+  const [backgrounds, setBackgrounds] = useState<string[]>([]);
+  const [selectedBackground, setSelectedBackground] = useState<string | null>(
+    null,
+  );
   const [loading, setLoading] = useState<boolean>(true); // Manage loading state
   const [error, setError] = useState<string | null>(null);
 
@@ -24,7 +24,6 @@ const BackgroundStep = ({
         // Simulate fetching data (replace with actual API call)
         const backgroundData = await getBackgroundUrls();
         setBackgrounds(backgroundData);
-        setSelectedBackground(backgroundData[0]);
         setLoading(false);
       } catch (error) {
         setError("Failed to fetch backgrounds");
@@ -48,41 +47,33 @@ const BackgroundStep = ({
       <div className="my-4 flex justify-between">
         <button
           className="mt-4 rounded-xl bg-slate-600 px-4 py-2 text-white"
-          onClick={() =>
-            selectedBackground
-              ? onPrev({ background: selectedBackground })
-              : null
-          }
+          onClick={() => onPrev({ background: selectedBackground || null })}
         >
           Prev
         </button>
         <button
-          disabled={!selectedBackground}
           className="mt-4 rounded-xl bg-purple-500 px-4 py-2 text-white"
-          onClick={() =>
-            selectedBackground && onNext({ background: selectedBackground })
-          }
+          onClick={() => onNext({ background: selectedBackground || null })}
         >
           Next
         </button>
       </div>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {backgrounds.map((background) => (
+        {backgrounds.map((background, index) => (
           <div
-            key={background.id}
-            className={`relative cursor-pointer border p-4  text-gray-700 ${
-              selectedBackground?.id === background.id
+            key={index}
+            className={`relative cursor-pointer border-2 p-4  text-gray-700 ${
+              selectedBackground === background
                 ? "border-purple-500"
                 : "border-gray-200"
             }`}
             onClick={() => setSelectedBackground(background)}
           >
             <img
-              src={background.src.original}
-              alt={background.alt}
+              src={background}
+              alt={`background[${index}]`}
               className="h-32 w-full object-cover"
             />
-            <p className="mt-2 text-center">{background.alt}</p>
           </div>
         ))}
       </div>

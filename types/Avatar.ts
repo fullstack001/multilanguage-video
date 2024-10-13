@@ -1,13 +1,10 @@
 export type Avatar = {
+  status: string;
+  thumbnail_video_url: string;
+  training_progress: string;
+  model_name: string;
   created_at: string;
-  gender: string;
-  image_url: string;
-  is_streamable: boolean;
-  modified_at: Date;
-  name: string;
-  owner_id: string;
-  presenter_id: string;
-  preview_url: string;
-  talking_preview_url: string;
-  thumbnail_url: string;
+  updated_at: string;
+  replica_id: string;
+  replica_name: string;
 };

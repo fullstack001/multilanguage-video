@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { FiBell, FiMenu } from "react-icons/fi";
-import { AiOutlineUser } from "react-icons/ai";
+import Link from "next/link"; // Change this import
+
+import { useNotificationStore } from "@/store/notificationStore";
 
 interface HeaderProps {
   onSidebarToggle: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onSidebarToggle }) => {
+  const { notifications } = useNotificationStore();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Remove the router and handleSignOut function
 
   return (
     <header className="flex items-center justify-between bg-white px-20 py-3 shadow-md">
@@ -18,14 +23,9 @@ const Header: React.FC<HeaderProps> = ({ onSidebarToggle }) => {
         <FiMenu className="h-6 w-6" />
       </button>
 
-      <div className="text-2xl font-semibold">Dashboard</div>
+      <div className="text-2xl font-semibold"></div>
 
       <div className="flex items-center space-x-4">
-        {/* Create Video Button */}
-        <button className="rounded-lg bg-purple-500 px-4 py-2 text-white hover:bg-purple-600">
-          Crear video
-        </button>
-
         {/* Notification Icon */}
         <button className="relative text-purple-600 hover:text-purple-800">
           <FiBell className="h-6 w-6" />
@@ -66,12 +66,12 @@ const Header: React.FC<HeaderProps> = ({ onSidebarToggle }) => {
                 Settings
               </a>
               <hr className="border-gray-200" />
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              <Link
+                href="/"
+                className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
               >
                 Sign out
-              </a>
+              </Link>
             </div>
           )}
         </div>

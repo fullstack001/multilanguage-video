@@ -5,51 +5,56 @@ import StepProgress from "./components/StepPrgress";
 import AvatarStep from "./components/Steps/AvatarStep";
 import ContentStep from "./components/Steps/ContentStep";
 import BackgroundStep from "./components/Steps/BackgroundStep";
-import VoiceStep from "./components/Steps/VoiceStep";
+// import VoiceStep from "./components/Steps/VoiceStep";
 import CreateVideoStep from "./components/Steps/CreateVideoStep";
+import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 
 const steps = [
   { component: AvatarStep, title: "Select Avatar" },
   { component: BackgroundStep, title: "Select Avatar" },
-  { component: ContentStep, title: "Write Content" },
-  { component: VoiceStep, title: "Select Language & Avatar" },
+  { component: ContentStep, title: "Write Content &Select Language" },
   { component: CreateVideoStep, title: "Create Video" },
 ];
 
 const VideoCreatorPage = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+  useAuthCheck();
   const [videoData, setVideoData] = useState({
+    currentStep: 0,
     avatar: null,
+    originContent: "",
     content: "",
     background: null,
-    language: "",
-    voice: null,
     audioUrl: "",
+    language: "",
   });
 
   const handleNextStep = (data: any) => {
-    console.log(data);
-    setVideoData((prevData) => ({ ...prevData, ...data }));
-    setCurrentStep((prevStep) => prevStep + 1);
+    setVideoData((prevData) => ({
+      ...prevData,
+      ...data,
+      currentStep: prevData.currentStep + 1,
+    }));
   };
   const handleprevStep = (data: any) => {
-    setCurrentStep(currentStep - 1);
+    setVideoData((prevData) => ({
+      ...prevData,
+      ...data,
+      currentStep: prevData.currentStep - 1,
+    }));
   };
 
-  console.log(videoData);
-
-  const StepComponent = steps[currentStep].component;
+  const StepComponent = steps[videoData.currentStep].component;
 
   return (
     <div className="p-6 ">
       <h1 className="mb-4 text-2xl font-bold text-gray-800">
-        {steps[currentStep].title}
+        {steps[videoData.currentStep].title}
       </h1>
-      <StepProgress currentStep={currentStep} />
+      <StepProgress currentStep={videoData.currentStep} />
       <StepComponent
         onNext={handleNextStep}
         onPrev={handleprevStep}
-        videoData={videoData} // Make sure this prop is also present
+        videoData={videoData} // Add language property
       />
     </div>
   );

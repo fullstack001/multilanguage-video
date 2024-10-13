@@ -1,12 +1,15 @@
 "use client";
 import { useState } from "react";
+import { useTheme } from "next-themes";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { login } from "../../lib/api/auth";
+import { login } from "../../../lib/api/auth";
 import { validateSigninForm } from "./validate";
-import { useUserStore } from "../../store/userStore";
+import { useUserStore } from "../../../store/userStore";
 
 const SigninPage = () => {
+  const { setTheme } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({ email: "", password: "", apiError: "" });
@@ -37,8 +40,9 @@ const SigninPage = () => {
     try {
       const response = await login(email, password);
       const { token } = response;
-      router.push("/dashboard");
       userLogin(token);
+      setTheme("light");
+      router.push("/dashboard");
     } catch (err: any) {
       if (err.message === "email") {
         setError((prev) => ({

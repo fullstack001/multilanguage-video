@@ -9,9 +9,28 @@ const menuData: Menu[] = [
   },
   {
     id: 2,
-    title: "Video Creator",
-    path: "/video-creator",
+    title: "Video",
     newTab: false,
+    submenu: [
+      {
+        id: 21,
+        title: "My Videos",
+        path: "/video/videos",
+        newTab: false,
+      },
+      {
+        id: 22,
+        title: "Video Create",
+        path: "/video/create",
+        newTab: false,
+      },
+      {
+        id: 23,
+        title: "Video Translation",
+        path: "/video/translation",
+        newTab: false,
+      },
+    ],
   },
   {
     id: 3,

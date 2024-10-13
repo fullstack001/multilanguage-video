@@ -10,6 +10,7 @@ import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
 import { Metadata } from "next";
+import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title:
@@ -19,20 +20,22 @@ export const metadata: Metadata = {
   // other metadata
 };
 
+// Initialize the font
+const inter = Inter({ subsets: ["latin"] });
+
 export default function Home() {
   return (
-    <>
+    <main className={inter.className}>
       <ScrollUp />
       <Hero />
       <Features />
-      <Video />
-      {/* <Brands /> */}
+      <Video />l{/* <Brands /> */}
       <AboutSectionOne />
       {/* <AboutSectionTwo /> */}
       <Testimonials />
       <Pricing />
       <Blog />
       <Contact />
-    </>
+    </main>
   );
 }
