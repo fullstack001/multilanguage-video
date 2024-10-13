@@ -130,10 +130,10 @@ const CreateVideoStep = ({
       <div className="mb-6">
         <div className="mt-4 flex h-64 w-full  items-center justify-center bg-gray-200 text-center text-lg text-gray-800">
           <p>
-            Usually you'll find that the videos take just a few minutes, however
-            if they're longer scripts, they may take 10 minutes or so ! You can
-            check the status of the video in the "My videos" Page and you will
-            get notification when the vidoe generating will complete.
+            Usually you willll find that the videos take just a few minutes,
+            however if they are longer scripts, they may take 10 minutes or so !
+            You can check the status of the video in the My videos Page and you
+            will get notification when the vidoe generating will complete.
           </p>
         </div>
       </div>
