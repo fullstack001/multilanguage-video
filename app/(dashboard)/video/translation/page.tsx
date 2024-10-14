@@ -21,6 +21,12 @@ export default function TranslationPage() {
 
   useEffect(() => {
     fetchVideos();
+    const handleRefetchData = () => fetchVideos();
+    window.addEventListener("refetchData", handleRefetchData);
+
+    return () => {
+      window.removeEventListener("refetchData", handleRefetchData);
+    };
   }, []);
 
   const fetchVideos = async () => {

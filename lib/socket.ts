@@ -56,5 +56,6 @@ const handleVideoCreated = (data: any) => {
 
     // Dispatch a custom event that components can listen to
     window.dispatchEvent(new CustomEvent("videoCreated", { detail: data }));
+    window.dispatchEvent(new CustomEvent("refetchData"));
   }
 };

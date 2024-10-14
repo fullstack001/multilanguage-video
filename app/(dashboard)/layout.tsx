@@ -19,29 +19,13 @@ export default function DashboardLayoutWrapper({
   useEffect(() => {
     if (isAuthenticated === false) {
       router.push("/login");
-    }
-
-    if (isAuthenticated) {
+    } else if (isAuthenticated) {
       const socket = initializeSocket();
 
-      const handleVideoCreatedNotification = (event: Event) => {
-        const data = (event as CustomEvent).detail;
-
-        // Show a toast notification
-        toast.success(`Your video "${data.video_name}" is ready!`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      };
-
+      // Listen for the custom videoCreated event
       window.addEventListener("videoCreated", handleVideoCreatedNotification);
 
-      // Cleanup on component unmount
+      // Clean up event listeners and socket on unmount
       return () => {
         window.removeEventListener(
           "videoCreated",
@@ -53,12 +37,28 @@ export default function DashboardLayoutWrapper({
   }, [isAuthenticated, router]);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // Loading state while auth is being checked
   }
+
+  // Event handler for video created notification
+  const handleVideoCreatedNotification = (event: Event) => {
+    const data = (event as CustomEvent).detail;
+    console.log("Video created event received:", data);
+
+    toast.success(`Your video "${data.video_name}" is ready!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
 
   return (
     <>
       <DashboardLayout>{children}</DashboardLayout>
+
       <ToastContainer />
     </>
   );

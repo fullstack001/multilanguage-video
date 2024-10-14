@@ -14,6 +14,12 @@ export default function VideosPage() {
 
   useEffect(() => {
     fetchVideos();
+    const handleRefetchData = () => fetchVideos();
+    window.addEventListener("refetchData", handleRefetchData);
+
+    return () => {
+      window.removeEventListener("refetchData", handleRefetchData);
+    };
   }, []);
 
   const fetchVideos = async () => {
