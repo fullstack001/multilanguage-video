@@ -34,8 +34,8 @@ const menuData: Menu[] = [
   },
   {
     id: 3,
-    title: "Campaign Management",
-    path: "/campaign",
+    title: "Conversation",
+    path: "/conversation",
     newTab: false,
   },
   {

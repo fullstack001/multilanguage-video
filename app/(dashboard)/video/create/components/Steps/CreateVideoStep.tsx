@@ -3,6 +3,7 @@ import { createVideo } from "@/lib/api/videoCreate";
 import { io } from "socket.io-client";
 import { VideoStatus } from "@/types/VideoStatus";
 import VideoPlayer from "@/components/VideoPlayer";
+import { useRouter } from "next/navigation";
 interface VideoResult {
   video_id: string;
   video_name: string;
@@ -21,6 +22,7 @@ const CreateVideoStep = ({
   onPrev: (data: { data: string }) => void;
   onNext: (data: { data: string }) => void;
 }) => {
+  const router = useRouter();
   const [videoResult, setVideoResult] = useState<VideoResult | null>(null);
   const [videoStatus, setVideoStatus] = useState<VideoStatus | null>(null);
   const [videoName, setVideoName] = useState<string>(""); // Video name input
@@ -53,6 +55,7 @@ const CreateVideoStep = ({
       );
       pendingVideos.push(response.resultData.video_id);
       localStorage.setItem("pendingVideos", JSON.stringify(pendingVideos));
+      router.push("/video/videos");
       // onVideoCreated(videoUrl); // Trigger callback for next steps
     } catch (error) {
       setError("Failed to create video");
