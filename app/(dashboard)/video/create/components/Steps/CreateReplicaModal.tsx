@@ -282,8 +282,8 @@ const CreateReplicaModal = ({ isOpen, onClose }) => {
                 </li>
                 <li className="flex items-center">
                   <FiVolume2 className="mr-2" />
-                  Speak <strong>&nbsp; naturally &nbsp;</strong>, we'll capture
-                  tone & emotion
+                  Speak <strong>&nbsp; naturally &nbsp;</strong>, we will
+                  capture tone & emotion
                 </li>
               </ul>
             </div>
@@ -305,7 +305,7 @@ const CreateReplicaModal = ({ isOpen, onClose }) => {
                 </li>
                 <li className="flex items-center">
                   <FaHeadSideVirus className="mr-2" />
-                  Don't turn your head away from the camera
+                  Do not turn your head away from the camera
                 </li>
                 <li className="flex items-center">
                   <FaExpand className="mr-2" />
@@ -313,7 +313,7 @@ const CreateReplicaModal = ({ isOpen, onClose }) => {
                 </li>
                 <li className="flex items-center">
                   <FaHandPaper className="mr-2 text-2xl" />
-                  Don't move around too much or exaggerate movements, like
+                  Don not move around too much or exaggerate movements, like
                   waving your hands
                 </li>
               </ul>
