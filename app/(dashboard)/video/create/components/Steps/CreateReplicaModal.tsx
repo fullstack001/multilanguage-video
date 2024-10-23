@@ -122,10 +122,10 @@ const CreateReplicaModal = ({ isOpen, onClose }) => {
                 individual being replicated:
               </p>
               <blockquote className="border-l-4 border-blue-500 pl-4 italic">
-                “I, [FULL NAME], am currently speaking and give consent to Tavus
-                to create an AI clone of me by using the audio and video samples
-                I provide. I understand that this AI clone can be used to create
-                videos that look and sound like me.”
+                &quot;I, [FULL NAME], am currently speaking and give consent to
+                Tavus to create an AI clone of me by using the audio and video
+                samples I provide. I understand that this AI clone can be used
+                to create videos that look and sound like me.&quot;
               </blockquote>
               <ul className="list-inside list-disc space-y-1">
                 <li>
@@ -252,10 +252,10 @@ const CreateReplicaModal = ({ isOpen, onClose }) => {
           </div>
 
           <div className="flex flex-col gap-8 md:flex-row">
-            {/* Do's Section */}
+            {/* Do&apos;s Section */}
             <div className="w-full rounded-lg bg-green-100 p-6 shadow-lg md:w-1/2">
               <h2 className="mb-4 text-xl font-semibold text-green-600">
-                Do's
+                Do&apos;s
               </h2>
               <ul className="space-y-4 text-green-600">
                 <li className="flex items-center">
@@ -288,10 +288,10 @@ const CreateReplicaModal = ({ isOpen, onClose }) => {
               </ul>
             </div>
 
-            {/* Don'ts Section */}
+            {/* Don&apos;ts Section */}
             <div className="w-full rounded-lg bg-red-100 p-6 shadow-lg md:w-1/2">
               <h2 className="mb-4 text-xl font-semibold text-red-600">
-                Don'ts
+                Don&apos;ts
               </h2>
               <ul className="space-y-4 text-red-600">
                 <li className="flex items-center">
