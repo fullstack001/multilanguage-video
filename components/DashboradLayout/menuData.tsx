@@ -14,14 +14,14 @@ const menuData: Menu[] = [
     submenu: [
       {
         id: 21,
-        title: "My Videos",
-        path: "/video/videos",
+        title: "Video Create",
+        path: "/video/create",
         newTab: false,
       },
       {
         id: 22,
-        title: "Video Create",
-        path: "/video/create",
+        title: "My Videos",
+        path: "/video/videos",
         newTab: false,
       },
       {

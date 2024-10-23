@@ -10,8 +10,8 @@ import CreateVideoStep from "./components/Steps/CreateVideoStep";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 
 const steps = [
-  { component: AvatarStep, title: "Select Avatar" },
-  { component: BackgroundStep, title: "Select Avatar" },
+  { component: AvatarStep, title: "Select Replica" },
+  { component: BackgroundStep, title: "Select Background" },
   { component: ContentStep, title: "Write Content &Select Language" },
   { component: CreateVideoStep, title: "Create Video" },
 ];

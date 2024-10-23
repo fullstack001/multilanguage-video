@@ -1,6 +1,6 @@
 import React from "react";
 
-const steps = ["Avatar", "Background", "Content", "Create"];
+const steps = ["Replica", "Background", "Content", "Create"];
 
 const StepProgress = ({ currentStep }: { currentStep: number }) => {
   return (

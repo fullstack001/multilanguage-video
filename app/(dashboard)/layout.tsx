@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 import DashboardLayout from "@/components/DashboradLayout";
 import { initializeSocket, disconnectSocket } from "@/lib/socket";
+import { useNotificationStore } from "@/store/notificationStore";
 
 export default function DashboardLayoutWrapper({
   children,
@@ -15,26 +16,35 @@ export default function DashboardLayoutWrapper({
 }) {
   const isAuthenticated = useAuthCheck();
   const router = useRouter();
+  const { fetchNotifications } = useNotificationStore();
 
   useEffect(() => {
     if (isAuthenticated === false) {
       router.push("/login");
     } else if (isAuthenticated) {
       const socket = initializeSocket();
+      fetchNotifications();
 
       // Listen for the custom videoCreated event
       window.addEventListener("videoCreated", handleVideoCreatedNotification);
-
+      window.addEventListener(
+        "replicaCreated",
+        handleReplicaCreatedNotification,
+      );
       // Clean up event listeners and socket on unmount
       return () => {
         window.removeEventListener(
           "videoCreated",
           handleVideoCreatedNotification,
         );
+        window.removeEventListener(
+          "replicaCreated",
+          handleReplicaCreatedNotification,
+        );
         disconnectSocket();
       };
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, fetchNotifications]);
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>; // Loading state while auth is being checked
@@ -44,8 +54,23 @@ export default function DashboardLayoutWrapper({
   const handleVideoCreatedNotification = (event: Event) => {
     const data = (event as CustomEvent).detail;
     console.log("Video created event received:", data);
+    fetchNotifications();
 
     toast.success(`Your video "${data.video_name}" is ready!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
+  const handleReplicaCreatedNotification = (event: Event) => {
+    const data = (event as CustomEvent).detail;
+    console.log("Replica created event received:", data);
+    fetchNotifications();
+    toast.success(`Your video "${data.replica_id}" is ready!`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

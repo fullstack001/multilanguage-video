@@ -1,10 +1,11 @@
+const flowbite = require("flowbite-react/tailwind");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}", // Add Flowbite components
+    flowbite.content(),
   ],
   darkMode: "class",
   theme: {
@@ -13,25 +14,25 @@ module.exports = {
       padding: "1rem",
     },
 
-    screens: {
-      xs: "450px",
-      // => @media (min-width: 450px) { ... }
+    // screens: {
+    //   xs: "450px",
+    //   // => @media (min-width: 450px) { ... }
 
-      sm: "575px",
-      // => @media (min-width: 576px) { ... }
+    //   sm: "575px",
+    //   // => @media (min-width: 576px) { ... }
 
-      md: "768px",
-      // => @media (min-width: 768px) { ... }
+    //   md: "768px",
+    //   // => @media (min-width: 768px) { ... }
 
-      lg: "992px",
-      // => @media (min-width: 992px) { ... }
+    //   lg: "992px",
+    //   // => @media (min-width: 992px) { ... }
 
-      xl: "1200px",
-      // => @media (min-width: 1200px) { ... }
+    //   xl: "1200px",
+    //   // => @media (min-width: 1200px) { ... }
 
-      "2xl": "1400px",
-      // => @media (min-width: 1400px) { ... }
-    },
+    //   "2xl": "1400px",
+    //   // => @media (min-width: 1400px) { ... }
+    // },
     extend: {
       colors: {
         current: "currentColor",
@@ -75,5 +76,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [flowbite.plugin()],
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
 import { getBackgroundUrls } from "@/lib/api/videoCreate";
+import { HiOutlineInformationCircle } from "react-icons/hi";
 
 const BackgroundStep = ({
   onNext,
@@ -57,6 +58,13 @@ const BackgroundStep = ({
         >
           Next
         </button>
+      </div>
+
+      <div className="my-4 flex items-center space-x-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+        <HiOutlineInformationCircle className="text-xl text-pink-500" />
+        <p className="text-sm text-gray-700">
+          You can select a background for your video or not.
+        </p>
       </div>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {backgrounds.map((background, index) => (

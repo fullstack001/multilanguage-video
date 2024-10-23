@@ -16,6 +16,8 @@ export const initializeSocket = () => {
 
     // Global event listeners
     socket.on("videoCreated", handleVideoCreated);
+
+    socket.on("replicaCreated", handleReplicaCreated);
   }
   return socket;
 };
@@ -58,4 +60,9 @@ const handleVideoCreated = (data: any) => {
     window.dispatchEvent(new CustomEvent("videoCreated", { detail: data }));
     window.dispatchEvent(new CustomEvent("refetchData"));
   }
+};
+
+const handleReplicaCreated = (data: any) => {
+  window.dispatchEvent(new CustomEvent("replicaCreated", { detail: data }));
+  window.dispatchEvent(new CustomEvent("refetchReplica"));
 };
