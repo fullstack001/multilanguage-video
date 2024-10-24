@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image"; // Import the Image component
 
 interface CardProps {
   title: string;
@@ -22,9 +23,11 @@ const Card: React.FC<CardProps> = ({
       className={`${classProps} flex items-center justify-between space-x-4 rounded-lg p-6 text-white shadow-md`}
     >
       <div className="border-rounded-full rounded-lg border border-white p-4">
-        <img
+        <Image
           src={imgsrc}
           alt="Logo"
+          width={20} // Specify width
+          height={20} // Specify height
           className={`w-5 overflow-hidden transition-all duration-300`}
         />
       </div>

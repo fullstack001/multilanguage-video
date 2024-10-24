@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
+import Image from "next/image";
 
 interface VideoThumbnailProps {
   streamUrl: string;
@@ -62,10 +63,12 @@ const VideoThumbnail: React.FC<VideoThumbnailProps> = ({
       <video ref={videoRef} className="hidden" />
       <canvas ref={canvasRef} className="hidden" />
       {thumbnailUrl ? (
-        <img
+        <Image
           src={thumbnailUrl}
           alt={title}
           className="h-full w-full rounded-md object-cover"
+          width={100}
+          height={100}
         />
       ) : (
         <div className="flex h-full w-full items-center justify-center rounded-md bg-gray-200">

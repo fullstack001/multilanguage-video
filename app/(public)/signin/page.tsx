@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -84,7 +85,12 @@ const SigninPage = () => {
                 )}
                 <button className="mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
-                    <img src="/assets/icons/google.svg" alt="google" />
+                    <Image
+                      src="/assets/icons/google.svg"
+                      alt="google"
+                      width={24}
+                      height={24}
+                    />
                   </span>
                   Sign in with Google
                 </button>
@@ -182,10 +188,12 @@ const SigninPage = () => {
                   >
                     {/* Conditionally render the spinner or text based on loading state */}
                     {loading ? (
-                      <img
+                      <Image
                         src="/assets/icons/spinner.svg"
                         alt="Loading spinner"
                         className="h-5 w-5"
+                        width={20}
+                        height={20}
                       />
                     ) : (
                       "Sign in"

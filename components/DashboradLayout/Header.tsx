@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FiBell, FiMenu } from "react-icons/fi";
 import Link from "next/link"; // Change this import
-
+import Image from "next/image";
 import { useNotificationStore } from "@/store/notificationStore";
 
 interface HeaderProps {
@@ -59,10 +59,12 @@ const Header: React.FC<HeaderProps> = ({ onSidebarToggle }) => {
             className="flex items-center space-x-2 focus:outline-none"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
-            <img
+            <Image
               src="/images/blog/author-01.png"
               alt="User avatar"
               className="h-8 w-8 rounded-full"
+              width={32}
+              height={32}
             />
           </button>
 
