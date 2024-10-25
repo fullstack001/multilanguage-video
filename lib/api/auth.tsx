@@ -50,13 +50,13 @@ export async function login(email: string, password: string) {
       email,
       password,
     });
-    return response.data;
+    return { status: 200, data: response.data };
   } catch (error) {
     // Handle and throw the error
     if (axios.isAxiosError(error) && error.response) {
-      throw new Error(error.response.data.msg || "Login failed");
+      return { status: 400, msg: error.response.data.msg };
     }
-    throw new Error("An error occurred during login");
+    return { status: 500, msg: "An error occurred during login" };
   }
 }
 
@@ -65,6 +65,32 @@ export async function googleSignIn(credential: string) {
     credential,
   });
   return response.data;
+}
+export async function requestPasswordReset(email: string) {
+  try {
+    const response = await axios.post(`${API_URL}/api/auth/request-reset`, {
+      email,
+    });
+    return { status: 200 };
+  } catch {
+    return { status: 400 };
+  }
+}
+
+export async function resetPassword(newPassword: string, resetToken: string) {
+  console.log(newPassword, resetToken);
+  try {
+    const response = await axios.post(`${API_URL}/api/auth/reset-password`, {
+      newPassword,
+      resetToken,
+    });
+    return { status: 200, msg: response.data };
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return { status: 400, msg: error.response.data.msg };
+    }
+    return { status: 500, msg: "An error occurred during password reset" };
+  }
 }
 
 // Logout function to remove token and redirect to landing page

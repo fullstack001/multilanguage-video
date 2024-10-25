@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import "node_modules/react-modal-video/css/modal-video.css";
 import "../styles/index.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +30,7 @@ export default function RootLayout({
       <head />
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <Providers>{children}</Providers>
+        <ToastContainer />
       </body>
     </html>
   );

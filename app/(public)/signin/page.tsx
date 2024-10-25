@@ -2,12 +2,14 @@
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { login } from "../../../lib/api/auth";
-import { validateSigninForm } from "./validate";
+import { login, requestPasswordReset } from "../../../lib/api/auth";
+import { validateSigninForm, validateEmail } from "./validate";
 import { useUserStore } from "../../../store/userStore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Modal, Button, Label, TextInput } from "flowbite-react";
 
 const SigninPage = () => {
   const { setTheme } = useTheme();
@@ -18,6 +20,8 @@ const SigninPage = () => {
   const { login: userLogin } = useUserStore();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
 
   const handleSubmit = async () => {
     setError({ email: "", password: "", apiError: "" });
@@ -40,10 +44,26 @@ const SigninPage = () => {
     // If validation passes, call the API
     try {
       const response = await login(email, password);
-      const { token } = response;
-      userLogin(token);
-      setTheme("light");
-      router.push("/dashboard");
+      if (response.status === 200) {
+        const { token } = response.data;
+        userLogin(token);
+        setTheme("light");
+        router.push("/dashboard");
+      } else {
+        if (response.msg === "not_verified") {
+          toast.error("Please verify your email to continue");
+
+          // Add this line to redirect to the signup page with showVerification=true
+          router.push(
+            "/signup?showVerification=true&email=" + encodeURIComponent(email),
+          );
+        } else {
+          setError((prev) => ({
+            ...prev,
+            apiError: response.msg,
+          }));
+        }
+      }
     } catch (err: any) {
       if (err.message === "email") {
         setError((prev) => ({
@@ -65,6 +85,29 @@ const SigninPage = () => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (validateEmail(forgotPasswordEmail)) {
+      console.log(validateEmail(forgotPasswordEmail));
+      toast.error("Please enter a valid email");
+      return;
+    }
+    console.log("button click", forgotPasswordEmail);
+
+    try {
+      const response = await requestPasswordReset(forgotPasswordEmail);
+      if (response.status === 200) {
+        setShowForgotPasswordModal(false);
+        toast.success(
+          "Reset password request success, check your email for further instructions.",
+        );
+      } else {
+        toast.error("Failed to request password reset");
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Failed to request password reset");
+    }
+  };
+
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
@@ -83,7 +126,7 @@ const SigninPage = () => {
                     {error.apiError}
                   </div>
                 )}
-                <button className="mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
+                {/* <button className="mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none">
                   <span className="mr-3">
                     <Image
                       src="/assets/icons/google.svg"
@@ -101,7 +144,7 @@ const SigninPage = () => {
                     Or, sign in with your email
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
-                </div>
+                </div> */}
                 <div className="mb-8">
                   <label
                     htmlFor="email"
@@ -173,12 +216,12 @@ const SigninPage = () => {
                     </label>
                   </div>
                   <div>
-                    <a
-                      href="#0"
+                    <button
+                      onClick={() => setShowForgotPasswordModal(true)}
                       className="text-sm font-medium text-primary hover:underline"
                     >
                       Forgot Password?
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div className="mb-6">
@@ -201,7 +244,7 @@ const SigninPage = () => {
                   </button>
                 </div>
                 <p className="text-center text-base font-medium text-body-color">
-                  Don’t you have an account?{" "}
+                  Don't you have an account?{" "}
                   <Link href="/signup" className="text-primary hover:underline">
                     Sign up
                   </Link>
@@ -211,6 +254,40 @@ const SigninPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Forgot Password Modal */}
+      <Modal
+        show={showForgotPasswordModal}
+        onClose={() => setShowForgotPasswordModal(false)}
+      >
+        <Modal.Header>Forgot Password Request</Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6">
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="email" value="Your email" />
+              </div>
+              <TextInput
+                id="email"
+                placeholder="name@company.com"
+                value={forgotPasswordEmail}
+                onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                required
+                type="email"
+              />
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleForgotPassword}>Send Reset Link</Button>
+          <Button
+            color="gray"
+            onClick={() => setShowForgotPasswordModal(false)}
+          >
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

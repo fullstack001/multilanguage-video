@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import { useSearchParams } from "next/navigation";
 
 import { googleSignIn } from "@/lib/api/auth";
 import { useUserStore } from "@/store/userStore";
@@ -28,6 +29,7 @@ const SignupPage = () => {
   const { setTheme } = useTheme();
   const { login: userLogin } = useUserStore();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [showVerification, setShowVerification] = useState(false);
 
@@ -47,6 +49,16 @@ const SignupPage = () => {
     // Handle successful verification (e.g., redirect to dashboard)
     router.push("/dashboard");
   };
+
+  useEffect(() => {
+    const showVerificationParam = searchParams.get("showVerification");
+    const emailParam = searchParams.get("email");
+
+    if (showVerificationParam === "true" && emailParam) {
+      setShowVerification(true);
+      setEmail(decodeURIComponent(emailParam));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     // Load the Google Identity Services script
