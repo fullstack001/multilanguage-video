@@ -18,38 +18,6 @@ export default function DashboardLayoutWrapper({
   const router = useRouter();
   const { fetchNotifications } = useNotificationStore();
 
-  useEffect(() => {
-    if (isAuthenticated === false) {
-      router.push("/login");
-    } else if (isAuthenticated) {
-      const socket = initializeSocket();
-      fetchNotifications();
-
-      // Listen for the custom videoCreated event
-      window.addEventListener("videoCreated", handleVideoCreatedNotification);
-      window.addEventListener(
-        "replicaCreated",
-        handleReplicaCreatedNotification,
-      );
-      // Clean up event listeners and socket on unmount
-      return () => {
-        window.removeEventListener(
-          "videoCreated",
-          handleVideoCreatedNotification,
-        );
-        window.removeEventListener(
-          "replicaCreated",
-          handleReplicaCreatedNotification,
-        );
-        disconnectSocket();
-      };
-    }
-  }, [isAuthenticated, router, fetchNotifications]);
-
-  if (isAuthenticated === null) {
-    return <div>Loading...</div>; // Loading state while auth is being checked
-  }
-
   // Event handler for video created notification
   const handleVideoCreatedNotification = (event: Event) => {
     const data = (event as CustomEvent).detail;
@@ -79,6 +47,44 @@ export default function DashboardLayoutWrapper({
       draggable: true,
     });
   };
+
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      router.push("/login");
+    } else if (isAuthenticated) {
+      const socket = initializeSocket();
+      fetchNotifications();
+
+      // Listen for the custom videoCreated event
+      window.addEventListener("videoCreated", handleVideoCreatedNotification);
+      window.addEventListener(
+        "replicaCreated",
+        handleReplicaCreatedNotification,
+      );
+      // Clean up event listeners and socket on unmount
+      return () => {
+        window.removeEventListener(
+          "videoCreated",
+          handleVideoCreatedNotification,
+        );
+        window.removeEventListener(
+          "replicaCreated",
+          handleReplicaCreatedNotification,
+        );
+        disconnectSocket();
+      };
+    }
+  }, [
+    isAuthenticated,
+    router,
+    fetchNotifications,
+    handleVideoCreatedNotification,
+    handleReplicaCreatedNotification,
+  ]);
+
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>; // Loading state while auth is being checked
+  }
 
   return (
     <>

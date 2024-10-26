@@ -15,11 +15,10 @@ const VideoThumbnail: React.FC<VideoThumbnailProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
-  let hls: Hls | null = null;
-
   useEffect(() => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
+    let hls: Hls | null = null; // Moved hls declaration inside useEffect
 
     if (video && canvas) {
       video.muted = true;

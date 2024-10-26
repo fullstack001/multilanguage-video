@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
 import { getBackgroundUrls } from "@/lib/api/videoCreate";
 import { HiOutlineInformationCircle } from "react-icons/hi";
-
+import Image from "next/image";
 const BackgroundStep = ({
   onNext,
   onPrev,
@@ -77,10 +77,12 @@ const BackgroundStep = ({
             }`}
             onClick={() => setSelectedBackground(background)}
           >
-            <img
+            <Image
               src={background}
               alt={`background[${index}]`}
               className="h-32 w-full object-cover"
+              width={100}
+              height={100}
             />
           </div>
         ))}
