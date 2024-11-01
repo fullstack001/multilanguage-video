@@ -12,6 +12,7 @@ import { googleSignIn } from "@/lib/api/auth";
 import { useUserStore } from "@/store/userStore";
 import SignupForm from "./components/SignupForm";
 import VerificationForm from "./components/VerificationForm";
+import useCurrentLocale from "@/lib/hooks/useCurrentLocales";
 
 // Add this type declaration at the top of the file
 declare global {
@@ -29,6 +30,7 @@ declare global {
 // };
 
 const SignupPage = () => {
+  const locale = useCurrentLocale();
   const { setTheme } = useTheme();
   const { login: userLogin } = useUserStore();
   const router = useRouter();
@@ -50,7 +52,7 @@ const SignupPage = () => {
     userLogin(token);
     setTheme("light");
     // Handle successful verification (e.g., redirect to dashboard)
-    router.push("/dashboard");
+    router.push(`/${locale}/dashboard`);
   };
 
   useEffect(() => {
@@ -101,7 +103,7 @@ const SignupPage = () => {
 
       if (result.ok) {
         // Redirect to dashboard or home page after successful sign-in
-        router.push("/dashboard");
+        router.push(`/${locale}/dashboard/overview`);
       } else {
         console.error("Google sign-in failed");
       }

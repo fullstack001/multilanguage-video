@@ -5,10 +5,12 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { resetPassword } from "../../../lib/api/auth";
-import { useUserStore } from "../../../store/userStore";
+import { resetPassword } from "@/lib/api/auth";
+import { useUserStore } from "@/store/userStore";
+import useCurrentLocale from "@/lib/hooks/useCurrentLocales";
 
 const ResetPasswordPage = () => {
+  const locale = useCurrentLocale();
   const { setTheme } = useTheme();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -69,7 +71,7 @@ const ResetPasswordPage = () => {
         toast.success("Password reset successfully");
         setSuccess("Password reset successfully");
         setTimeout(() => {
-          router.push("/signin");
+          router.push(`/${locale}/signin`);
         }, 3000);
       } else {
         setError((prev) => ({
