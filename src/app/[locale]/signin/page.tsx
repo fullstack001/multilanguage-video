@@ -4,14 +4,16 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { login, requestPasswordReset } from "../../../lib/api/auth";
+import { login, requestPasswordReset } from "@/lib/api/auth";
 import { validateSigninForm, validateEmail } from "./validate";
-import { useUserStore } from "../../../store/userStore";
+import { useUserStore } from "@/store/userStore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Modal, Button, Label, TextInput } from "flowbite-react";
+import useCurrentLocale from "@/lib/hooks/useCurrentLocales";
 
 const SigninPage = () => {
+  const locale = useCurrentLocale();
   const { setTheme } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +50,7 @@ const SigninPage = () => {
         const { token } = response.data;
         userLogin(token);
         setTheme("light");
-        router.push("/dashboard");
+        router.push(`/${locale}/dashboard/overview`);
       } else {
         if (response.msg === "not_verified") {
           toast.error("Please verify your email to continue");
@@ -109,12 +111,12 @@ const SigninPage = () => {
   };
 
   return (
-    <>
-      <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
+    <div className="mt-24" style={{ paddingTop: "100px" }}>
+      <div className="pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
-              <div className="mx-auto max-w-[500px] rounded bg-white px-6 py-10 shadow-three dark:bg-dark sm:p-[60px]">
+              <div className="mt-26 mx-auto max-w-[500px] rounded bg-white px-6 py-10 shadow-three dark:bg-dark sm:p-[60px]">
                 <h3 className="mb-3 text-center text-2xl font-bold text-black dark:text-white sm:text-3xl">
                   Sign in to your account
                 </h3>
@@ -253,7 +255,7 @@ const SigninPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Forgot Password Modal */}
       <Modal
@@ -288,7 +290,7 @@ const SigninPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 

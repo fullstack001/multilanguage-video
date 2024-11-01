@@ -1,0 +1,46 @@
+{
+  "Menu": {
+    "home": "Início",
+    "about": "Sobre",
+    "blog": "Blog",
+    "support": "Suporte",
+    "signin": "Entrar",
+    "signup": "Cadastrar"
+  },
+  "Hero": {
+    "title": "Revolucione Suas Campanhas de Mídia Social e E-mail com Avatares Interativos Potencializados por IA",
+    "description": "Leve seu marketing digital para o próximo nível com nossa plataforma impulsionada por IA, projetada para automatizar campanhas de mídia social e e-mail. Engaje seu público como nunca antes usando avatares interativos e realistas que se comunicam em vários idiomas. Seja você um mercado global ou criando conteúdo personalizado, nossa solução oferece interações inteligentes e multilíngues que cativam e convertem."
+  },
+  "Feature": {
+    "title": "Principais Recursos",
+    "description": "Existem muitas variações de passagens de Lorem Ipsum disponíveis, mas a maioria sofreu alterações de alguma forma.",
+    "feature1": {
+      "title": "Automação Potencializada por IA",
+      "description": "Gerencie sem esforço suas campanhas de mídia social e e-mail com automação inteligente. Nossa IA garante a entrega de conteúdo relevante e oportuno em vários canais, reduzindo o esforço manual e maximizando o impacto."
+    },
+    "feature2": {
+      "title": "Avatares Interativos",
+      "description": "Dê vida às suas campanhas com avatares realistas e interativos que envolvem os usuários em conversas personalizadas. Adapte cada interação às necessidades do seu público para uma experiência imersiva e impactante."
+    },
+    "feature3": {
+      "title": "Suporte Multilíngue",
+      "description": "Alcance um público global com suporte para vários idiomas. Nossos avatares e conteúdo impulsionado por IA se adaptam a diferentes idiomas e culturas, garantindo que sua mensagem ressoe, não importa onde seu público esteja."
+    },
+    "feature4": {
+      "title": "Integração Fluida com Mídias Sociais",
+      "description": "Conecte-se facilmente às principais plataformas de mídia social. Programe, automatize e otimize suas postagens enquanto analisa o desempenho para melhorar continuamente sua estratégia."
+    },
+    "feature5": {
+      "title": "Campanhas de E-mail Personalizadas",
+      "description": "Crie, programe e automatize campanhas de e-mail personalizadas adaptadas às preferências do seu público. Use IA para criar conteúdo que fale diretamente a cada destinatário, aumentando o engajamento e as taxas de conversão."
+    },
+    "feature6": {
+      "title": "Análises e Insights em Tempo Real",
+      "description": "Acompanhe o sucesso de suas campanhas em tempo real. Use insights baseados em dados para ajustar sua estratégia, identificar oportunidades de crescimento e maximizar seu retorno sobre investimento (ROI)."
+    },
+    "feature7": {
+      "title": "Escalável e Personalizável",
+      "description": "Seja você uma pequena empresa ou uma grande corporação, nossa plataforma se adapta às suas necessidades. Personalize avatares, mensagens e estratégias de campanha para corresponder à sua marca e ao seu público-alvo."
+    }
+  }
+}

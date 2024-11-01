@@ -1,0 +1,46 @@
+{
+  "Menu": {
+    "home": "Home",
+    "about": "About",
+    "blog": "Blog",
+    "support": "Support",
+    "signin": "Sign In",
+    "signup": "Sign Up"
+  },
+  "Hero": {
+    "title": "Revolutionize Your Social Media and Mailing Campaigns with AI-Powered Interactive Avatars",
+    "description": "Take your digital marketing to the next level with our AI-driven platform, designed to automate social media and mailing campaigns. Engage your audience like never before using lifelike, interactive avatars that communicate in multiple languages. Whether you are targeting a global market or creating personalized content, our solution delivers intelligent, multilingual interactions that captivate and convert."
+  },
+  "Feature": {
+    "title": "Main Features",
+    "description": "There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form.",
+    "feature1": {
+      "title": "AI-Powered Automation",
+      "description": "Effortlessly manage your social media and mailing campaigns with intelligent automation. Our AI ensures timely and relevant content delivery across multiple channels, reducing manual effort and maximizing impact."
+    },
+    "feature2": {
+      "title": "Interactive Avatars",
+      "description": "Bring your campaigns to life with realistic, interactive avatars that engage users in personalized conversations. Tailor each interaction to your audience's needs for an immersive and impactful experience."
+    },
+    "feature3": {
+      "title": "Multi-Language Support",
+      "description": "Reach a global audience with support for multiple languages. Our avatars and AI-driven content adapt to different languages and cultures, ensuring your message resonates no matter where your audience is."
+    },
+    "feature4": {
+      "title": "Seamless Social Media Integration",
+      "description": "Connect to major social media platforms with ease. Schedule, automate, and optimize your posts while analyzing performance to continuously improve your strategy."
+    },
+    "feature5": {
+      "title": "Personalized Email Campaigns",
+      "description": "Create, schedule, and automate personalized email campaigns tailored to your audience's preferences. Use AI to craft content that speaks directly to each recipient, enhancing engagement and conversion rates."
+    },
+    "feature6": {
+      "title": "Real-Time Analytics and Insights",
+      "description": "Track the success of your campaigns in real-time. Use data-driven insights to fine-tune your strategy, identify opportunities for growth, and maximize your return on investment (ROI)."
+    },
+    "feature7": {
+      "title": "Scalable and Customizable",
+      "description": "Whether you're a small business or a large enterprise, our platform scales with your needs. Customize the avatars, messaging, and campaign strategies to match your brand and target audience."
+    }
+  }
+}

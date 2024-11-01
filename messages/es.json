@@ -1,0 +1,46 @@
+{
+  "Menu": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "blog": "Blog",
+    "support": "Soporte",
+    "signin": "Iniciar sesión",
+    "signup": "Registrarse"
+  },
+  "Hero": {
+    "title": "Revoluciona tus campañas de redes sociales y correo con avatares interactivos impulsados por IA",
+    "description": "Lleva tu marketing digital al siguiente nivel con nuestra plataforma impulsada por IA, diseñada para automatizar campañas de redes sociales y correo. Involucra a tu audiencia como nunca antes utilizando avatares interactivos y realistas que se comunican en múltiples idiomas. Ya sea que estés apuntando a un mercado global o creando contenido personalizado, nuestra solución ofrece interacciones inteligentes y multilingües que cautivan y convierten."
+  },
+  "Feature": {
+    "title": "Características Principales",
+    "description": "Hay muchas variaciones de pasajes de Lorem Ipsum disponibles, pero la mayoría han sufrido alteraciones de alguna forma.",
+    "feature1": {
+      "title": "Automatización Potenciada por IA",
+      "description": "Administra sin esfuerzo tus campañas de redes sociales y correo con automatización inteligente. Nuestra IA asegura la entrega de contenido relevante y oportuno a través de múltiples canales, reduciendo el esfuerzo manual y maximizando el impacto."
+    },
+    "feature2": {
+      "title": "Avatares Interactivos",
+      "description": "Dale vida a tus campañas con avatares realistas e interactivos que involucran a los usuarios en conversaciones personalizadas. Adapta cada interacción a las necesidades de tu audiencia para una experiencia inmersiva e impactante."
+    },
+    "feature3": {
+      "title": "Soporte Multilingüe",
+      "description": "Alcanza una audiencia global con soporte para múltiples idiomas. Nuestros avatares y contenido impulsado por IA se adaptan a diferentes idiomas y culturas, asegurando que tu mensaje resuene sin importar dónde se encuentre tu audiencia."
+    },
+    "feature4": {
+      "title": "Integración Perfecta con Redes Sociales",
+      "description": "Conéctate a las principales plataformas de redes sociales con facilidad. Programa, automatiza y optimiza tus publicaciones mientras analizas el rendimiento para mejorar continuamente tu estrategia."
+    },
+    "feature5": {
+      "title": "Campañas de Correo Electrónico Personalizadas",
+      "description": "Crea, programa y automatiza campañas de correo electrónico personalizadas adaptadas a las preferencias de tu audiencia. Usa IA para crear contenido que hable directamente a cada destinatario, mejorando el compromiso y las tasas de conversión."
+    },
+    "feature6": {
+      "title": "Análisis e Información en Tiempo Real",
+      "description": "Rastrea el éxito de tus campañas en tiempo real. Usa información basada en datos para ajustar tu estrategia, identificar oportunidades de crecimiento y maximizar tu retorno de inversión (ROI)."
+    },
+    "feature7": {
+      "title": "Escalable y Personalizable",
+      "description": "Ya seas una pequeña empresa o una gran empresa, nuestra plataforma se adapta a tus necesidades. Personaliza los avatares, mensajes y estrategias de campaña para que coincidan con tu marca y audiencia objetivo."
+    }
+  }
+}

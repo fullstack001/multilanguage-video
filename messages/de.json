@@ -1,0 +1,47 @@
+{
+  "Menu": {
+    "home": "Home",
+    "about": "Über",
+    "blog": "Blog",
+    "support": "Support",
+    "signin": "Anmelden",
+    "signup": "Registrieren"
+  },
+  "Hero": {
+    "title": "Transform your social media and mailing campaigns with AI-powered interactive avatars",
+    "description": "Our AI-powered platform designed to automate mailing and social media campaigns takes your digital marketing to the next level. Engage your audience like never before with real, interactive avatars that communicate in multiple languages. Whether targeting a global market or creating personalized content, our solution offers intelligent, multilingual interactions that captivate and convert."
+  },
+
+  "Feature": {
+    "title": "Hauptmerkmale",
+    "description": "Es gibt viele Variationen von Lorem-Ipsum-Passagen, aber die meisten haben in irgendeiner Form Veränderungen erfahren.",
+    "feature1": {
+      "title": "KI-gestützte Automatisierung",
+      "description": "Verwalten Sie mühelos Ihre Social-Media- und E-Mail-Kampagnen mit intelligenter Automatisierung. Unsere KI sorgt für eine zeitgerechte und relevante Inhaltslieferung über mehrere Kanäle, reduziert den manuellen Aufwand und maximiert die Wirkung."
+    },
+    "feature2": {
+      "title": "Interaktive Avatare",
+      "description": "Erwecken Sie Ihre Kampagnen mit realistischen, interaktiven Avataren zum Leben, die Benutzer in personalisierte Gespräche einbinden. Passen Sie jede Interaktion an die Bedürfnisse Ihres Publikums an, um ein fesselndes und wirkungsvolles Erlebnis zu schaffen."
+    },
+    "feature3": {
+      "title": "Mehrsprachige Unterstützung",
+      "description": "Erreichen Sie ein globales Publikum mit Unterstützung für mehrere Sprachen. Unsere Avatare und KI-gesteuerten Inhalte passen sich an verschiedene Sprachen und Kulturen an und stellen sicher, dass Ihre Botschaft überall ankommt."
+    },
+    "feature4": {
+      "title": "Nahtlose Integration in soziale Medien",
+      "description": "Verbinden Sie sich mühelos mit den wichtigsten sozialen Medienplattformen. Planen, automatisieren und optimieren Sie Ihre Beiträge, während Sie die Leistung analysieren, um Ihre Strategie kontinuierlich zu verbessern."
+    },
+    "feature5": {
+      "title": "Personalisierte E-Mail-Kampagnen",
+      "description": "Erstellen, planen und automatisieren Sie personalisierte E-Mail-Kampagnen, die auf die Vorlieben Ihres Publikums zugeschnitten sind. Nutzen Sie KI, um Inhalte zu erstellen, die direkt zu jedem Empfänger sprechen und das Engagement sowie die Konversionsraten erhöhen."
+    },
+    "feature6": {
+      "title": "Echtzeit-Analysen und Einblicke",
+      "description": "Verfolgen Sie den Erfolg Ihrer Kampagnen in Echtzeit. Nutzen Sie datengestützte Einblicke, um Ihre Strategie zu verfeinern, Wachstumschancen zu identifizieren und Ihre Rendite (ROI) zu maximieren."
+    },
+    "feature7": {
+      "title": "Skalierbar und anpassbar",
+      "description": "Egal, ob Sie ein kleines Unternehmen oder ein großes Unternehmen sind, unsere Plattform passt sich Ihren Bedürfnissen an. Passen Sie die Avatare, Botschaften und Kampagnenstrategien an, um Ihrer Marke und Zielgruppe gerecht zu werden."
+    }
+  }
+}

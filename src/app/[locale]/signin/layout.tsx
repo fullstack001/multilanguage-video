@@ -1,5 +1,8 @@
 // app/signin/layout.tsx
 import { Metadata } from "next";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title:
@@ -13,5 +16,12 @@ export default function SignInLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Header />
+      {children}
+      <Footer />
+      <ScrollToTop />
+    </>
+  );
 }

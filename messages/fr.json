@@ -1,0 +1,46 @@
+{
+  "Menu": {
+    "home": "Accueil",
+    "about": "À propos",
+    "blog": "Blog",
+    "support": "Support",
+    "signin": "Se connecter",
+    "signup": "S'inscrire"
+  },
+  "Hero": {
+    "title": "Révolutionnez vos campagnes sur les réseaux sociaux et de mailing avec des avatars interactifs alimentés par l'IA",
+    "description": "Élevez votre marketing numérique à un niveau supérieur avec notre plateforme alimentée par l'IA, conçue pour automatiser les campagnes sur les réseaux sociaux et de mailing. Engagez votre audience comme jamais auparavant grâce à des avatars interactifs et réalistes qui communiquent en plusieurs langues. Que vous cibliez un marché mondial ou que vous créiez du contenu personnalisé, notre solution offre des interactions intelligentes et multilingues qui captivent et convertissent."
+  },
+  "Feature": {
+    "title": "Fonctionnalités Principales",
+    "description": "Il existe de nombreuses variations de passages de Lorem Ipsum disponibles, mais la majorité a subi des modifications sous une forme ou une autre.",
+    "feature1": {
+      "title": "Automatisation Alimentée par l'IA",
+      "description": "Gérez sans effort vos campagnes sur les réseaux sociaux et de mailing grâce à une automatisation intelligente. Notre IA garantit la livraison de contenu pertinent et en temps voulu sur plusieurs canaux, réduisant l'effort manuel et maximisant l'impact."
+    },
+    "feature2": {
+      "title": "Avatars Interactifs",
+      "description": "Donnez vie à vos campagnes avec des avatars réalistes et interactifs qui engagent les utilisateurs dans des conversations personnalisées. Adaptez chaque interaction aux besoins de votre audience pour une expérience immersive et percutante."
+    },
+    "feature3": {
+      "title": "Support Multilingue",
+      "description": "Atteignez un public mondial avec un support pour plusieurs langues. Nos avatars et contenus alimentés par l'IA s'adaptent à différentes langues et cultures, garantissant que votre message résonne peu importe où se trouve votre audience."
+    },
+    "feature4": {
+      "title": "Intégration Fluide aux Réseaux Sociaux",
+      "description": "Connectez-vous facilement aux principales plateformes de réseaux sociaux. Programmez, automatisez et optimisez vos publications tout en analysant les performances pour améliorer continuellement votre stratégie."
+    },
+    "feature5": {
+      "title": "Campagnes de Mail Personnalisées",
+      "description": "Créez, programmez et automatisez des campagnes de mail personnalisées adaptées aux préférences de votre audience. Utilisez l'IA pour créer un contenu qui s'adresse directement à chaque destinataire, améliorant l'engagement et les taux de conversion."
+    },
+    "feature6": {
+      "title": "Analyses et Insights en Temps Réel",
+      "description": "Suivez le succès de vos campagnes en temps réel. Utilisez des insights basés sur les données pour affiner votre stratégie, identifier des opportunités de croissance et maximiser votre retour sur investissement (ROI)."
+    },
+    "feature7": {
+      "title": "Scalable et Personnalisable",
+      "description": "Que vous soyez une petite entreprise ou une grande entreprise, notre plateforme s'adapte à vos besoins. Personnalisez les avatars, les messages et les stratégies de campagne pour correspondre à votre marque et à votre audience cible."
+    }
+  }
+}

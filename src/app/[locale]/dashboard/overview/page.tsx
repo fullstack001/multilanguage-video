@@ -16,7 +16,7 @@ const DashboardPage = () => {
           title="Active plan"
           value="4"
           icon={<FiFile />}
-          imgsrc="assets/icons/idea.svg"
+          imgsrc="/assets/icons/idea.svg"
           bgColor="dashcard1"
           classProps="bg-dashcard1"
         />
@@ -24,7 +24,7 @@ const DashboardPage = () => {
           title="Created videos"
           value="45"
           icon={<FiCheckCircle />}
-          imgsrc="assets/icons/ui_design.svg"
+          imgsrc="/assets/icons/ui_design.svg"
           bgColor="dashcard2"
           classProps="bg-dashcard2"
         />
@@ -32,7 +32,7 @@ const DashboardPage = () => {
           title="Created videos"
           value="300"
           icon={<FiUsers />}
-          imgsrc="assets/icons/teamwork.svg"
+          imgsrc="/assets/icons/teamwork.svg"
           bgColor="dashcard3"
           classProps="bg-dashcard3"
         />
@@ -40,7 +40,7 @@ const DashboardPage = () => {
           title="Created Canpaign"
           value="4000"
           icon={<FiFilm />}
-          imgsrc="assets/icons/startup.svg"
+          imgsrc="/assets/icons/startup.svg"
           bgColor="dashcard4"
           classProps="bg-dashcard4"
         />

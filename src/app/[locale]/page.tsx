@@ -11,6 +11,9 @@ import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title:
@@ -25,17 +28,23 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className={inter.className}>
-      <ScrollUp />
-      <Hero />
-      <Features />
-      <Video />l{/* <Brands /> */}
-      <AboutSectionOne />
-      {/* <AboutSectionTwo /> */}
-      <Testimonials />
+    <>
+      <Header />
+      <main className={inter.className}>
+        <ScrollUp />
+        <Hero />
+        <Features />
+        <Video />
+        {/* <Brands /> */}
+        <AboutSectionOne />
+        {/* <AboutSectionTwo /> */}
+        <Testimonials />
       <Pricing />
       <Blog />
-      <Contact />
-    </main>
+        <Contact />
+      </main>
+      <Footer />
+      <ScrollToTop />
+    </>
   );
 }

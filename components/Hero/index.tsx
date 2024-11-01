@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
+  const t = useTranslations("Hero");
   return (
     <>
       <section
@@ -15,17 +17,10 @@ const Hero = () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="mx-auto mb-5 max-w-[900px] text-3xl  font-bold  leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                  Revolutionize Your Social Media and Mailing Campaigns with
-                  AI-Powered Interactive Avatars
+                  {t("title")}
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl">
-                  Take your digital marketing to the next level with our
-                  AI-driven platform, designed to automate social media and
-                  mailing campaigns. Engage your audience like never before
-                  using lifelike, interactive avatars that communicate in
-                  multiple languages. Whether you are targeting a global market
-                  or creating personalized content, our solution delivers
-                  intelligent, multilingual interactions that captivate and
+                  {t("description")}
                   convert.
                 </p>
                 {/* <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">

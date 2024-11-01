@@ -4,9 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Header from "./Header";
-import menuData from "./menuData";
+import useMenuData from "./menuData";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const menuData = useMenuData();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [openSubmenuId, setOpenSubmenuId] = useState<number | null>(null);
@@ -102,12 +103,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </aside>
 
       {/* Main content */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-h-screen flex-1 flex-col">
         {/* Header */}
         <Header onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6 px-12">{children}</main>
+        <main className="flex-1 overflow-y-auto p-6 px-6">{children}</main>
       </div>
     </div>
   );
