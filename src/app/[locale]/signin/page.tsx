@@ -112,7 +112,7 @@ const SigninPage = () => {
 
   return (
     <div className="mt-24" style={{ paddingTop: "100px" }}>
-      <div className="pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
+      <div className="pb-16  md:pb-20 lg:pb-28 ">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">

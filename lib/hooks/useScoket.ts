@@ -1,10 +1,24 @@
-import { useEffect } from "react";
-import { initializeSocket, getSocket, disconnectSocket } from "../socket";
+import { useEffect, useState } from "react";
+import { initializeSocket, getSocket } from "../socket";
 
-export const useSocket = () => {
+const useSocket = (key: string) => {
+  const [data, setData] = useState<any>(null);
+  const socket = initializeSocket();
+
   useEffect(() => {
-    initializeSocket();
-  }, []);
+    const currentSocket = getSocket();
 
-  return getSocket();
+    currentSocket.on(key, (newData) => {
+      console.log(newData);
+      setData(newData);
+    });
+
+    return () => {
+      currentSocket.disconnect();
+    };
+  }, [key]);
+
+  return data;
 };
+
+export default useSocket;
