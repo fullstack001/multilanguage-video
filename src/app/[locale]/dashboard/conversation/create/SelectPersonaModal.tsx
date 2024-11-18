@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import Image from "next/image";
-
+import Link from "next/link";
 import { Persona } from "@/types/Persona";
 import { stockPersonas } from "@/lib/data";
 import { avatarData } from "@/lib/data";
-import VideoThumbnail from "@/components/VideoThumbnail";
 import { getThumbnailFromVideoUrl } from "@/lib/utils/getThumbnailFromVideoUrl";
+import { useLocale } from "next-intl";
+
+import { fetchPersonas } from "@/lib/api/personas";
 
 interface ModalProps {
   showModal: boolean;
@@ -22,8 +24,16 @@ const PersonaModal: React.FC<ModalProps> = ({
 }) => {
   const [selectedPersona, setSelectedPersona] = useState<Persona | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [personalPersonas, setPersonalPersonas] = useState<Persona[]>([]);
+  const locale = useLocale();
 
   useEffect(() => {
+    const getPersonas = async () => {
+      const response = await fetchPersonas();
+      setPersonalPersonas((response as Persona[]) ? response : []);
+    };
+
+    getPersonas();
     if (showModal) {
       Modal.setAppElement("body");
     }
@@ -75,8 +85,31 @@ const PersonaModal: React.FC<ModalProps> = ({
           </button>
         </div>
         <div className="mb-4 flex items-center justify-between">
-          <div className="font-bold text-gray-500">Personal Personas 0</div>
-          <button className="text-sm text-pink-500">+ Create Persona</button>
+          <div className="font-bold text-gray-500">
+            Personal Personas {personalPersonas.length}
+          </div>
+          <Link
+            className="text-sm text-pink-500"
+            href={`/${locale}/dashboard/conversation/create-persona`}
+          >
+            + Create Persona
+          </Link>
+        </div>
+        <div className="max-h-[400px] space-y-4 overflow-y-auto">
+          {personalPersonas.map((persona, index) => (
+            <div
+              key={index}
+              className="cursor-pointer rounded-md border p-2 hover:bg-gray-50"
+              onClick={() => setSelectedPersona(persona)}
+            >
+              <p className="font-semibold">{persona.persona_name}</p>
+              <p className="text-sm text-gray-500">
+                {persona?.system_prompt.length > 30
+                  ? `${persona.system_prompt.substring(0, 30)}...`
+                  : persona?.system_prompt}
+              </p>
+            </div>
+          ))}
         </div>
         <div className="my-4 font-bold text-gray-500">
           Stock Personas ({stockPersonas.length})
@@ -90,7 +123,9 @@ const PersonaModal: React.FC<ModalProps> = ({
             >
               <p className="font-semibold">{persona.persona_name}</p>
               <p className="text-sm text-gray-500">
-                This is a test persona description...
+                {persona?.system_prompt.length > 30
+                  ? `${persona.system_prompt.substring(0, 30)}...`
+                  : persona?.system_prompt}
               </p>
             </div>
           ))}

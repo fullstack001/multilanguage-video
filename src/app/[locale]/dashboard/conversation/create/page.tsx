@@ -1,12 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { getThumbnailFromVideoUrl } from "@/lib/utils/getThumbnailFromVideoUrl";
+import { toast } from "react-toastify";
+import { useLocale } from "next-intl";
+
 import SelectPersonaModal from "./SelectPersonaModal";
 import SelectReplicaModal from "./SelectReplicaModal";
 import RightSidePanel from "./RightSidePanel";
 import { Persona } from "@/types/Persona";
 import { Avatar } from "@/types/Avatar";
-import { getThumbnailFromVideoUrl } from "@/lib/utils/getThumbnailFromVideoUrl";
-import { toast } from "react-toastify";
 import {
   createConversation,
   getConversations,
@@ -29,6 +32,7 @@ const ConversationCreatePage: React.FC = () => {
     useState<Conversation | null>(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const locale = useLocale();
 
   useEffect(() => {
     getConversations().then((data) => {
@@ -210,7 +214,15 @@ const ConversationCreatePage: React.FC = () => {
         </div>
 
         <div className="rounded-lg bg-gray-100 p-4">
-          <h3 className="mb-2 text-lg font-bold">Generated Conversations</h3>
+          <div className="flex justify-between">
+            <h3 className="mb-2 text-lg font-bold">Generated Conversations</h3>
+            <Link
+              className="mb-2 rounded-md  bg-green-200 px-4 py-2"
+              href={`/${locale}/dashboard/conversation/library`}
+            >
+              All conversations
+            </Link>
+          </div>
           {conversations.map((conversation) => (
             <div
               key={conversation.conversation_id}

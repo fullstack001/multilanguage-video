@@ -63,42 +63,86 @@ const Pricing = () => {
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           <PricingBox
             packageName="Lite"
-            price={isMonthly ? "40" : "120"}
+            price="free"
+            // price={isMonthly ? "40" : "120"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            subtitle="Access at Author/Reader-Only Level to Embellisher eReader and Creator Editor & Sales Multimedia Landing Page Apps."
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
+            <OfferList
+              text="Access at Author/Reader-Only Level to Embellisher eReader"
+              status="active"
+            />
+            {/* <OfferList text="Use with Unlimited Projects" status="active" /> */}
+            <OfferList
+              text="Creator Editor & Sales Multimedia Landing Page Apps"
+              status="active"
+            />
+            {/* <OfferList text="Email Support" status="active" />
             <OfferList text="Lifetime Access" status="inactive" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="Free Lifetime Updates" status="inactive" /> */}
           </PricingBox>
           <PricingBox
             packageName="Basic"
-            price={isMonthly ? "399" : "789"}
+            price={isMonthly ? "15" : "140"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            subtitle="Free access to Embellisher eReader and Creator Editor & Sales Multimedia Landing Page Apps at Author/Publisher Level. Access to marketing, coupons, and pricing of your ePub3 creations and other backend tools for your promotions and landing page multimedia ePub3 documents."
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="active" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="Five team members." status="active" />
+            <OfferList
+              text="Full access to Global Replica Video Creator Platform (123 stock replicas & personal replica creator)."
+              status="active"
+            />
+            <OfferList
+              text="Full access to Global Replica Video Conversation Creator Platform (7+ personas, 123 stock replicas and personal replica creator)."
+              status="active"
+            />
+            <OfferList text="3 free personal replicas" status="active" />
+            <OfferList
+              text="25 new personal replicas per month"
+              status="active"
+            />
+            <OfferList
+              text="Up to 3 concurrent conversations"
+              status="active"
+            />
+            <OfferList text="Content Moderation" status="active" />
+            <OfferList text="Bring your own audio" status="active" />
+            <OfferList
+              text="Full access to Global Audience selection, campaign creation for social media marketing with up to seven different channels (Facebook, X, Instagram, Linkedin, YouTube, Pinterest and more to come). Full access to scheduling and transmission of social media campaign, plus full monitoring of results."
+              status="active"
+            />
           </PricingBox>
           <PricingBox
             packageName="Plus"
-            price={isMonthly ? "589" : "999"}
+            price={isMonthly ? "55" : "500"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            subtitle="Free access to Embellisher eReader and Creator Editor & Sales Multimedia Landing Page Apps at Adminr/Publisher Level. Including user controls and control of organizing and labeling of your ePub3 promotion topics and descriptions for your clients."
           >
-            <OfferList text="All UI Components" status="active" />
-            <OfferList text="Use with Unlimited Projects" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="active" />
-            <OfferList text="Free Lifetime Updates" status="active" />
+            <OfferList text="Ten team members." status="active" />
+            <OfferList
+              text="Full access to Global Replica Video Creator Platform (123 stock replicas & personal replica creator)."
+              status="active"
+            />
+            <OfferList
+              text="Full access to Global Replica Video Conversation Creator Platform (7+ personas, 123 stock replicas and personal replica creator)."
+              status="active"
+            />
+            <OfferList text="10 free personal replicas" status="active" />
+            <OfferList
+              text="100 new personal replicas per month"
+              status="active"
+            />
+            <OfferList
+              text="Conversation recording & transcripts"
+              status="active"
+            />
+            <OfferList text="Content Moderation" status="active" />
+            <OfferList text="Content Moderation" status="active" />
+            <OfferList text="Bring your own audio" status="active" />
+            <OfferList
+              text="Full access to Global Audience selection, campaign creation for social media marketing with up to seven different channels (Facebook, X, Instagram, Linkedin, YouTube, Pinterest and more to come). Full access to scheduling and transmission of social media campaign, plus full monitoring of results."
+              status="active"
+            />
           </PricingBox>
         </div>
       </div>
