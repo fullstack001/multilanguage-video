@@ -30,7 +30,7 @@ const ErrorPage = () => {
                 </p>
                 {isLoggedIn ? (
                   <Link
-                    href="/dashboard"
+                    href="/dashboard/overview"
                     className="rounded-md bg-primary px-8 py-3 text-base font-bold text-white shadow-signUp duration-300 hover:bg-white hover:text-primary md:px-9 lg:px-8 xl:px-9"
                   >
                     Go to Dashboard

@@ -52,7 +52,7 @@ const SignupPage = () => {
     userLogin(token);
     setTheme("light");
     // Handle successful verification (e.g., redirect to dashboard)
-    router.push(`/${locale}/dashboard`);
+    router.push(`/${locale}/dashboard/overview`);
   };
 
   useEffect(() => {
