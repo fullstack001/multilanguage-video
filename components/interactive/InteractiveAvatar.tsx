@@ -242,6 +242,22 @@ export default function InteractiveAvatar() {
                 >
                   End session
                 </Button>
+                <Button
+                  className="rounded-lg bg-gradient-to-tr from-indigo-500  to-indigo-300 text-white"
+                  size="md"
+                  variant="shadow"
+                  onClick={() => alert("Developing Now")}
+                >
+                  {`<>`}Integration
+                </Button>
+                <Button
+                  className="rounded-lg bg-gradient-to-tr from-indigo-500  to-indigo-300 text-white"
+                  size="md"
+                  variant="shadow"
+                  onClick={() => alert("Developing Now")}
+                >
+                  Share
+                </Button>
               </div>
             </div>
           ) : !isLoadingSession ? (
