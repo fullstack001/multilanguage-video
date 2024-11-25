@@ -3,6 +3,8 @@ import { Avatar } from "@/types/Avatar";
 import { Photo } from "@/types/Photo";
 import { Voice } from "@/types/Voice";
 import { InteractiveAvatar } from "@/types/InteractiveAvatar";
+import { Video } from "@/types/Video";
+import { VideoDetail } from "@/types/VideoDetail";
 const baseUrl = "https://api.heygen.com";
 
 export const heygenApi = axios.create({
@@ -34,4 +36,18 @@ export const getAccessToken = async (): Promise<string> => {
   const response = await heygenApi.post("/v1/streaming.create_token");
   console.log(response.data);
   return response.data.data.token;
+};
+
+export const getVideoDetail = async (
+  video_id: string,
+): Promise<VideoDetail> => {
+  const response = await heygenApi.get(
+    `/v1/video_status.get?video_id=${video_id}`,
+  );
+  return response.data.data;
+};
+
+export const getVideoList = async (): Promise<Video[]> => {
+  const response = await heygenApi.get("/v1/video.list");
+  return response.data.data.videos;
 };

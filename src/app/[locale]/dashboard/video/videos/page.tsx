@@ -3,23 +3,21 @@
 import { useState, useEffect } from "react";
 import { getUserVideos, deleteVideo } from "@/lib/api/videoMamagement";
 import VideoPlayer from "@/components/VideoPlayer";
-import VideoThumbnail from "@/components/VideoThumbnail";
-import { Video } from "@/types/Video";
+import { VideoDetail } from "@/types/VideoDetail";
+import VideoPreview from "./VideoPreview";
 
 export default function VideosPage() {
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [videos, setVideos] = useState<
+    { _id: string; user: string; video_id: string }[]
+  >([]);
+  const [selectedVideo, setSelectedVideo] = useState<VideoDetail | null>(null);
+  const [selectedVideoTitle, setSelectedVideoTitle] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
 
   useEffect(() => {
     fetchVideos();
     const handleRefetchData = () => fetchVideos();
-    window.addEventListener("refetchData", handleRefetchData);
-
-    return () => {
-      window.removeEventListener("refetchData", handleRefetchData);
-    };
   }, []);
 
   const fetchVideos = async () => {
@@ -34,12 +32,17 @@ export default function VideosPage() {
     }
   };
 
-  const handleDownload = (video: Video) => {
+  const setVideo = (video: VideoDetail, title: string) => {
+    setSelectedVideo(video);
+    setSelectedVideoTitle(title);
+  };
+
+  const handleDownload = (video: VideoDetail) => {
     const link = document.createElement("a");
-    link.href = video.download_url;
+    link.href = video.video_url;
 
     // Create a file name using video_name or video_id, and ensure it has a .mp4 extension
-    let fileName = (video.video_name || video.video_id || "video").trim();
+    let fileName = selectedVideoTitle.trim();
     if (!fileName.toLowerCase().endsWith(".mp4")) {
       fileName += ".mp4";
     }
@@ -60,7 +63,7 @@ export default function VideosPage() {
     try {
       await deleteVideo(videoId);
       setVideos(videos.filter((video) => video._id !== videoId));
-      if (selectedVideo?._id === videoId) {
+      if (selectedVideo?.id === videoId) {
         setSelectedVideo(null);
       }
     } catch (error) {
@@ -86,29 +89,11 @@ export default function VideosPage() {
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
             {videos.map((video) => (
-              <div
+              <VideoPreview
                 key={video._id}
-                className={`video-item cursor-pointer rounded-lg p-2 transition ${
-                  selectedVideo?._id === video._id
-                    ? "bg-gray-300"
-                    : "hover:bg-gray-200"
-                }`}
-                onClick={() => setSelectedVideo(video)}
-              >
-                {video.status === "ready" ? (
-                  <VideoThumbnail
-                    streamUrl={video.stream_url || null}
-                    title={video.video_name || "Untitled Video"}
-                  />
-                ) : (
-                  <div className="flex h-32 items-center justify-center bg-gray-200 text-gray-500">
-                    Generating...
-                  </div>
-                )}
-                <h3 className="mt-2 text-sm font-semibold text-gray-800">
-                  {video.video_name || "Untitled Video"}
-                </h3>
-              </div>
+                video_id={video.video_id}
+                setSelectedVideo={setVideo}
+              />
             ))}
           </div>
         )}
@@ -119,12 +104,12 @@ export default function VideosPage() {
         {selectedVideo ? (
           <div>
             <h2 className="mb-4 text-xl font-bold text-gray-800">
-              {selectedVideo.video_name || selectedVideo.video_id}
+              {selectedVideoTitle}
             </h2>
-            {selectedVideo.status === "ready" ? (
+            {selectedVideo.status === "completed" ? (
               <VideoPlayer
-                streamUrl={selectedVideo.stream_url}
-                title={selectedVideo.video_name || "Untitled Video"}
+                streamUrl={selectedVideo.video_url}
+                title={selectedVideoTitle}
               />
             ) : (
               <div className="flex h-64 items-center justify-center bg-gray-100 text-gray-500">
@@ -140,15 +125,15 @@ export default function VideosPage() {
                 Download
               </button>
               <button
-                onClick={() => handleDelete(selectedVideo._id)}
+                onClick={() => handleDelete(selectedVideo.id)}
                 className={`rounded px-4 py-2 text-white ${
-                  deleteLoading === selectedVideo._id
+                  deleteLoading === selectedVideo.id
                     ? "bg-gray-400"
                     : "bg-red-500 hover:bg-red-600"
                 }`}
-                disabled={deleteLoading === selectedVideo._id}
+                disabled={deleteLoading === selectedVideo.id}
               >
-                {deleteLoading === selectedVideo._id ? "Deleting..." : "Delete"}
+                {deleteLoading === selectedVideo.id ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>

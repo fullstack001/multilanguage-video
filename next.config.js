@@ -3,7 +3,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["127.0.0.1"], // Local image domain
+    domains: ["127.0.0.1", 'files2.heygen.ai'], // Local image domain
     remotePatterns: [
       {
         protocol: "https",

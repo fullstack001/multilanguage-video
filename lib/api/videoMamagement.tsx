@@ -2,7 +2,7 @@ import axiosInstance from "./axios";
 
 import { Video } from "@/types/Video";
 
-export const getUserVideos = async (): Promise<Video[]> => {
+export const getUserVideos = async (): Promise<{_id:string, user:string, video_id:string}[]> => {
   try {
     const response = await axiosInstance.get(
       "/api/video-management/get-user-videos",
