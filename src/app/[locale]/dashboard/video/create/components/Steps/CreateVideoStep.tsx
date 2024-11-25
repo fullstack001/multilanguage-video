@@ -23,22 +23,11 @@ const CreateVideoStep = ({
   onNext: (data: { data: string }) => void;
 }) => {
   const router = useRouter();
-  const [videoResult, setVideoResult] = useState<VideoResult | null>(null);
-  const [videoStatus, setVideoStatus] = useState<VideoStatus | null>(null);
   const [videoName, setVideoName] = useState<string>(""); // Video name input
   const [showNameInput, setShowNameInput] = useState<boolean>(true); // Control visibility of name input
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const socket = io(process.env.NEXT_PUBLIC_API_URL);
-  //   socket.on("videoCreated", (data: VideoResult) => {
-  //     console.log(data);
-  //     if (data.video_id === videoStatus?.video_id) {
-  //       setVideoResult(data);
-  //     }
-  //   });
-  // }, []);
+  const [success, setSuccess] = useState<boolean>(false);
 
   // Function to create the video (call your backend or API)
   const handleCreateVideo = async () => {
@@ -48,26 +37,13 @@ const CreateVideoStep = ({
     try {
       // Call your API to create the video
       const response = await createVideo({ ...videoData, name: videoName });
-      setVideoStatus(response.resultData);
-      setShowNameInput(false); // Hide the input after submission
-      const pendingVideos = JSON.parse(
-        localStorage.getItem("pendingVideos") || "[]",
-      );
-      pendingVideos.push(response.resultData.video_id);
-      localStorage.setItem("pendingVideos", JSON.stringify(pendingVideos));
-      router.push("/video/videos");
+      setSuccess(true);
+
       // onVideoCreated(videoUrl); // Trigger callback for next steps
     } catch (error) {
       setError("Failed to create video");
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Function to download the video
-  const handleDownload = () => {
-    if (videoResult && videoResult.download_url) {
-      window.open(videoResult.download_url, "_blank");
     }
   };
 
@@ -106,37 +82,15 @@ const CreateVideoStep = ({
           >
             {loading ? "Creating..." : "Create Video"}
           </button>
-
-          {/* Save Button (Placeholder for custom save logic) */}
-          {videoResult && (
-            <button
-              className="rounded-xl bg-green-500 px-4 py-2 text-white"
-              onClick={() => console.log("Save video logic goes here")}
-            >
-              Save
-            </button>
-          )}
-
-          {/* Download Button */}
-          {videoResult && (
-            <button
-              className="rounded-xl bg-blue-500 px-4 py-2 text-white"
-              onClick={handleDownload}
-              disabled={!videoResult}
-            >
-              Download
-            </button>
-          )}
         </div>
       </div>
       {/* Preview Area */}
       <div className="mb-6">
         <div className="mt-4 flex h-64 w-full  items-center justify-center bg-gray-200 text-center text-lg text-gray-800">
           <p>
-            Usually you willll find that the videos take just a few minutes,
-            however if they are longer scripts, they may take 10 minutes or so !
-            You can check the status of the video in the My videos Page and you
-            will get notification when the vidoe generating will complete.
+            {success
+              ? "Video is creating. Please check the status on videos page."
+              : "Usually you willll find that the videos take just a few minutes, however if they are longer scripts, they may take 10 minutes or so ! You can check the status of the video in the My videos Page and you will get notification when the vidoe generating will complete."}
           </p>
         </div>
       </div>

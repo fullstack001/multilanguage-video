@@ -36,14 +36,14 @@ export const translateContent = async ({
       text,
       targetLanguage,
     });
-    return response.data.translated;
+    return response.data.translatedText;
   } catch (error) {
     handleApiError(error);
   }
 };
 
 export const createVideo = async (videoData: {}): Promise<{
-  resultData: VideoStatus;
+  video_id: string;
 }> => {
   try {
     const response = await axiosInstance.post(
@@ -66,4 +66,4 @@ export const translateVideo = async (id: string, targetLanguage: string) => {
   } catch (error) {
     handleApiError(error);
   }
-};  
+};

@@ -10,9 +10,9 @@ import CreateVideoStep from "./components/Steps/CreateVideoStep";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 
 const steps = [
-  { component: AvatarStep, title: "Select Replica" },
+  { component: AvatarStep, title: "Select Avatar" },
   { component: BackgroundStep, title: "Select Background" },
-  { component: ContentStep, title: "Write Content &Select Language" },
+  { component: ContentStep, title: "Select Voice" },
   { component: CreateVideoStep, title: "Create Video" },
 ];
 
@@ -20,12 +20,9 @@ const VideoCreatorPage = () => {
   useAuthCheck();
   const [videoData, setVideoData] = useState({
     currentStep: 0,
-    avatar: null,
-    originContent: "",
-    content: "",
+    character: null,
+    voice: null,
     background: null,
-    audioUrl: "",
-    language: "",
   });
 
   const handleNextStep = (data: any) => {
@@ -42,6 +39,7 @@ const VideoCreatorPage = () => {
       currentStep: prevData.currentStep - 1,
     }));
   };
+  console.log(videoData);
 
   const StepComponent = steps[videoData.currentStep].component;
 

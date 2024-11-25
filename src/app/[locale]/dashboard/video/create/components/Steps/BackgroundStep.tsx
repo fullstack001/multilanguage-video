@@ -1,47 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Loading from "@/components/Loading";
-import { getBackgroundUrls } from "@/lib/api/videoCreate";
-import { HiOutlineInformationCircle } from "react-icons/hi";
+
 import Image from "next/image";
 const BackgroundStep = ({
   onNext,
   onPrev,
 }: {
-  onNext: (background: { background: string }) => void;
-  onPrev: (background: { background: string }) => void;
+  onNext: (background: { background: object }) => void;
+  onPrev: (background: { background: object }) => void;
 }) => {
-  const [backgrounds, setBackgrounds] = useState<string[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState<string | null>(
+  const [backgrounds, setBackgrounds] = useState<object[]>([]);
+  const [selectedBackground, setSelectedBackground] = useState<object | null>(
     null,
   );
-  const [loading, setLoading] = useState<boolean>(true); // Manage loading state
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Fetch the background data (from an API or static array)
-    const fetchBackgrounds = async () => {
-      setLoading(true);
-      try {
-        // Simulate fetching data (replace with actual API call)
-        const backgroundData = await getBackgroundUrls();
-        setBackgrounds(backgroundData);
-        setLoading(false);
-      } catch (error) {
-        setError("Failed to fetch backgrounds");
-        setLoading(false);
-      }
-    };
-
-    fetchBackgrounds();
-  }, []);
-
-  if (loading) {
-    return <Loading spinnerSrc="/assets/icons/spinner.svg" />;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const [backgroundType, setBackgroundType] = useState<string>("color"); // New state for background type
 
   return (
     <div>
@@ -60,32 +31,67 @@ const BackgroundStep = ({
         </button>
       </div>
 
-      <div className="my-4 flex items-center space-x-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-        <HiOutlineInformationCircle className="text-xl text-pink-500" />
-        <p className="text-sm text-gray-700">
-          You can select a background for your video or not.
-        </p>
-      </div>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {backgrounds.map((background, index) => (
-          <div
-            key={index}
-            className={`relative cursor-pointer border-2 p-4  text-gray-700 ${
-              selectedBackground === background
-                ? "border-purple-500"
-                : "border-gray-200"
-            }`}
-            onClick={() => setSelectedBackground(background)}
-          >
-            <Image
-              src={background}
-              alt={`background[${index}]`}
-              className="h-32 w-full object-cover"
-              width={100}
-              height={100}
+      <div className="my-4 flex flex-col space-x-4">
+        <label className="mb-2 flex items-center text-lg font-bold">
+          <input
+            type="radio"
+            value="color"
+            checked={backgroundType === "color"}
+            onChange={() => setBackgroundType("color")}
+            className="mr-2 h-5 w-5"
+          />
+          <span className="w-full rounded  bg-blue-200 p-2">
+            Color Background
+          </span>
+        </label>
+        {backgroundType === "color" && (
+          <div className="rounded-lg border bg-gray-100 p-4">
+            <p>Select a color background</p>
+            <input
+              type="color"
+              onChange={(e) =>
+                setSelectedBackground({ type: "color", value: e.target.value })
+              }
+              className="mt-2 h-10 w-full border-none"
             />
           </div>
-        ))}
+        )}
+      </div>
+      <div className="my-4 flex flex-col space-x-4">
+        <label className="mb-2  flex items-center text-lg font-bold">
+          <input
+            type="radio"
+            value="image"
+            checked={backgroundType === "image"}
+            onChange={() => setBackgroundType("image")}
+            className="mr-2 h-5 w-5"
+          />
+          <span className="w-full rounded bg-blue-200 p-2">Image </span>
+        </label>
+        {backgroundType === "image" && (
+          <div className="rounded-lg border bg-gray-100 p-4">
+            <p>Comming Soon</p>
+            {/* Add image upload component here */}
+          </div>
+        )}
+      </div>
+      <div className="my-4 flex flex-col space-x-4">
+        <label className="mb-2 flex items-center text-lg font-bold">
+          <input
+            type="radio"
+            value="video"
+            checked={backgroundType === "video"}
+            onChange={() => setBackgroundType("video")}
+            className="mr-2 h-5 w-5"
+          />
+          <span className="w-full rounded bg-blue-200 p-2">Video </span>
+        </label>
+        {backgroundType === "video" && (
+          <div className="rounded-lg border bg-gray-100 p-4">
+            <p>Comming Soon</p>
+            {/* Add video upload component here */}
+          </div>
+        )}
       </div>
     </div>
   );

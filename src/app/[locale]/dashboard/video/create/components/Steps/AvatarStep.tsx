@@ -1,126 +1,107 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Modal from "react-modal";
+import { toast } from "react-toastify";
 import Loading from "@/components/Loading";
 import { Avatar } from "@/types/Avatar";
-import { FaPlayCircle, FaTimes } from "react-icons/fa";
-import { FiUserPlus } from "react-icons/fi";
-import { avatarData, personalAvatarData } from "@/lib/data";
+import { Photo } from "@/types/Photo";
+import { getAvatar } from "@/lib/api/heygen";
+import AvatarRender from "@/components/AvatarRender";
+import TalkingPhotoRender from "@/components/TalkingPhotoRender";
 import "./avatar.css";
-import CreateReplicaModal from "./CreateReplicaModal"; // Assume this component exists
-
-const stockAvatars = avatarData;
-const personalAvatars = personalAvatarData; // Assuming this data is available
 
 const AvatarStep = ({
   onNext,
   onPrev,
   videoData,
 }: {
-  videoData: { avatar: Avatar };
-  onNext: (avatar: { avatar: Avatar }) => void;
-  onPrev: (avatar: { avatar: Avatar }) => void;
+  videoData: { character: object | null };
+  onNext: (character: { character: object }) => void;
+  onPrev: (character: { character: object }) => void;
 }) => {
-  const [selectedAvatar, setSelectedAvatar] = useState<Avatar | null>(
-    videoData.avatar || null,
+  const [selectedAvatar, setSelectedAvatar] = useState<object | null>(
+    videoData.character || null,
   );
-  // Modal state
-  const [isOpen, setIsOpen] = useState<boolean>(false); // To control modal visibility
-  const [videoUrl, setVideoUrl] = useState<string | null>(null); // To store the video URL
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const handlePlayVideo = (mediaUrl: string) => {
-    setVideoUrl(mediaUrl); // Set the video URL to play
-    setIsOpen(true); // Open the modal
+  // Modal state
+
+  const [avatars, setAvatars] = useState<Avatar[]>([]);
+  const [talkingPhotos, setTalkingPhotos] = useState<Photo[]>([]);
+  const [activeTab, setActiveTab] = useState<"avatars" | "talkingPhotos">(
+    "avatars",
+  ); // New state for active tab
+  const [selectedCharacter, setSelectedCharacter] = useState<object | null>(
+    videoData.character || null,
+  );
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getAvatar();
+      setAvatars(res.avatars);
+      setTalkingPhotos(res.talking_photos);
+    };
+    getData();
+  }, []);
+
+  const handleCharacter = (type: string, id: string) => {
+    if (type === "avatar") {
+      setSelectedCharacter({ type, avatar_id: id });
+    } else {
+      setSelectedCharacter({ type, talking_photo_id: id });
+    }
+    console.log(type, id);
   };
 
-  const capitalizeName = (name: string) =>
-    name.charAt(0).toUpperCase() + name.slice(1);
-
-  const renderAvatarGrid = (avatars: Avatar[], title: string) => (
-    <div>
-      <h2 className="mb-2 text-xl font-semibold">
-        {title} {avatars.length > 0 && `(${avatars.length})`}
-      </h2>
-      <div className="grid grid-cols-2 gap-4 overflow-y-auto  md:grid-cols-6 ">
-        {title === "Personal Replicas" && (
-          <div
-            className="block cursor-pointer items-center justify-center gap-3 rounded-lg border border-dashed border-purple-700 p-4  text-purple-700"
-            onClick={() => setIsCreateModalOpen(true)}
-          >
-            <FiUserPlus className="mx-auto my-2" />
-            <p className="text-center text-lg">Create Replica</p>
-          </div>
-        )}
-        {avatars.map((avatar) => (
-          <div
-            key={avatar.replica_id}
-            className={`relative rounded-xl border-2 p-4 ${
-              selectedAvatar?.replica_id === avatar.replica_id
-                ? "border-purple-500"
-                : "border-gray-200"
-            }`}
-            onClick={() => setSelectedAvatar(avatar)}
-          >
-            <p className="text-center text-lg text-gray-700">
-              {capitalizeName(avatar.replica_name)}
-            </p>
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 hover:opacity-100">
-              <FaPlayCircle
-                size={40}
-                className="cursor-pointer text-white"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePlayVideo(avatar.thumbnail_video_url);
-                }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  const gotoNextStep = () => {
+    if (!selectedCharacter) {
+      toast.error("Please select a Avatar or Talking Photo");
+      return;
+    }
+    onNext({ character: selectedCharacter });
+  };
 
   return (
     <div>
-      <div className="flex w-full justify-end">
+      <div className="my-4 flex justify-between">
         <button
-          disabled={!selectedAvatar}
-          className="my-3 mt-4 rounded-xl bg-purple-500 px-4 py-2 text-white"
-          onClick={() => selectedAvatar && onNext({ avatar: selectedAvatar })}
+          className="ml-auto mt-4 rounded-xl bg-purple-500 px-4 py-2 text-white"
+          onClick={gotoNextStep}
         >
           Next
         </button>
       </div>
-      <div className="space-y-8">
-        {renderAvatarGrid(personalAvatars, "Personal Replicas")}
-        {renderAvatarGrid(stockAvatars, "Stock Replicas")}
-      </div>
-
-      {/* Modal for video preview */}
-      {videoUrl && (
-        <Modal
-          isOpen={isOpen}
-          onRequestClose={() => setIsOpen(false)}
-          contentLabel="Avatar Video"
-          className="modal-video"
-          overlayClassName="modal-overlay"
+      <div className="my-4 flex justify-around">
+        <button
+          className={`tab-button ${
+            activeTab === "avatars"
+              ? "border-blue-700 bg-blue-500 text-white shadow-lg"
+              : "border border-transparent bg-white text-blue-500"
+          } rounded-md px-4 py-2 transition-all duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-100`}
+          onClick={() => setActiveTab("avatars")}
         >
-          <div className="modal-content">
-            <button className="close-button" onClick={() => setIsOpen(false)}>
-              <FaTimes size={24} />
-            </button>
-            {/* Use <video> tag to prevent download and play directly */}
-            <video controls autoPlay src={videoUrl} className="w-full" />
-          </div>
-        </Modal>
-      )}
-
-      {/* Create Replica Modal */}
-      <CreateReplicaModal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-      />
+          Avatars ({avatars.length > 0 && `(${avatars.length})`})
+        </button>
+        <button
+          className={`tab-button ${
+            activeTab === "talkingPhotos"
+              ? "border-blue-700 bg-blue-500 text-white shadow-lg"
+              : "border border-transparent bg-white text-blue-500"
+          } rounded-md px-4 py-2 transition-all duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-100`}
+          onClick={() => setActiveTab("talkingPhotos")}
+        >
+          Talking Photos (
+          {talkingPhotos.length > 0 && `(${talkingPhotos.length})`})
+        </button>
+      </div>
+      <div className="space-y-8">
+        {activeTab === "avatars" ? (
+          <AvatarRender avatars={avatars} onSelect={handleCharacter} />
+        ) : (
+          <TalkingPhotoRender
+            talkingPhotos={talkingPhotos}
+            onSelect={handleCharacter}
+          />
+        )}
+      </div>
     </div>
   );
 };

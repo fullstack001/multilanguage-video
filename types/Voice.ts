@@ -1,17 +1,10 @@
 export type Voice = {
-  id: string;
-  displayName: string;
-  locale: string;
+  voice_id: string;
+  language: string;
   gender: string;
-  imageUrl: string;
-  speakerType: string;
-  ageRange: string;
-  speakerStyles: [
-    {
-      deprecated: boolean;
-      id: string;
-      displayName: string;
-      sampleTtsUrl: string;
-    },
-  ];
+  name: string;
+  preview_audio: string;
+  support_pause: boolean;
+  emotion_support: boolean;
+  support_interactive_avatar: boolean;
 };
