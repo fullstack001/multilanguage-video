@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heygen/streaming-avatar": "^2.0.8",
+    "@nextui-org/react": "^2.4.8",
+    "@phosphor-icons/react": "^2.1.7",
+    "ahooks": "^3.8.1",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
     "eslint": "8.33.0",
