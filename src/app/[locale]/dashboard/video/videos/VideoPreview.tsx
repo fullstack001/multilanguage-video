@@ -14,7 +14,7 @@ export default function VideoPreview({
 }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [video, setVideo] = useState<Video>(null);
-  const [vidoeDetail, setVideoDetail] = useState<VideoDetail>(null);
+  const [vidoeDetail, setVideoDetail] = useState<VideoDetail | null>(null);
 
   useEffect(() => {
     const fetchVideoDetail = async (video_id: string) => {
@@ -25,14 +25,14 @@ export default function VideoPreview({
       if (currentVideo.status === "completed") {
         const res = await getVideoDetail(video_id);
         setVideoDetail(res);
+      } else {
+        fetchVideoDetail(video_id);
       }
       setLoading(false);
     };
     fetchVideoDetail(video_id);
   }, [video_id]);
-  if (loading) {
-    return <>Loading...</>;
-  }
+
   return (
     <div
       className={`video-item cursor-pointer rounded-lg p-2 transition ${
@@ -40,13 +40,18 @@ export default function VideoPreview({
       }`}
       onClick={() => setSelectedVideo(vidoeDetail, video.video_title)}
     >
-      {video?.status === "completed" ? (
+      {loading ? (
+        <div className="flex h-32 items-center justify-center bg-gray-200 text-gray-500">
+          Loading...
+        </div>
+      ) : vidoeDetail ? (
         <Image
           className="mx-auto"
-          src={vidoeDetail.thumbnail_url}
+          src={vidoeDetail?.thumbnail_url}
           alt={"Video thumbnail"}
           width={220}
           height={100}
+          style={{ height: "auto" }}
         />
       ) : (
         <div className="flex h-32 items-center justify-center bg-gray-200 text-gray-500">

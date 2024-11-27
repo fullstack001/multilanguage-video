@@ -38,26 +38,7 @@ const useMenuData = () => {
       id: 3,
       title: "Conversation",
       newTab: false,
-      submenu: [
-        {
-          id: 31,
-          title: "Create Conversation",
-          path: `/${locale}/dashboard/conversation/create`,
-          newTab: false,
-        },
-        {
-          id: 32,
-          title: "Conversation Library",
-          path: `/${locale}/dashboard/conversation/library`,
-          newTab: false,
-        },
-        {
-          id: 33,
-          title: "Create Persona",
-          path: `/${locale}/dashboard/conversation/create-persona`,
-          newTab: false,
-        },
-      ],
+      path: `/${locale}/dashboard/conversation`,
     },
     {
       id: 4,

@@ -18,12 +18,7 @@ const AvatarStep = ({
   onNext: (character: { character: object }) => void;
   onPrev: (character: { character: object }) => void;
 }) => {
-  const [selectedAvatar, setSelectedAvatar] = useState<object | null>(
-    videoData.character || null,
-  );
-
-  // Modal state
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [avatars, setAvatars] = useState<Avatar[]>([]);
   const [talkingPhotos, setTalkingPhotos] = useState<Photo[]>([]);
   const [activeTab, setActiveTab] = useState<"avatars" | "talkingPhotos">(
@@ -35,9 +30,11 @@ const AvatarStep = ({
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       const res = await getAvatar();
       setAvatars(res.avatars);
       setTalkingPhotos(res.talking_photos);
+      setLoading(false);
     };
     getData();
   }, []);
@@ -69,29 +66,37 @@ const AvatarStep = ({
           Next
         </button>
       </div>
-      <div className="my-4 flex justify-around">
-        <button
-          className={`tab-button ${
-            activeTab === "avatars"
-              ? "border-blue-700 bg-blue-500 text-white shadow-lg"
-              : "border border-transparent bg-white text-blue-500"
-          } rounded-md px-4 py-2 transition-all duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-100`}
-          onClick={() => setActiveTab("avatars")}
-        >
-          Avatars ({avatars.length > 0 && `(${avatars.length})`})
-        </button>
-        <button
-          className={`tab-button ${
-            activeTab === "talkingPhotos"
-              ? "border-blue-700 bg-blue-500 text-white shadow-lg"
-              : "border border-transparent bg-white text-blue-500"
-          } rounded-md px-4 py-2 transition-all duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-100`}
-          onClick={() => setActiveTab("talkingPhotos")}
-        >
-          Talking Photos (
-          {talkingPhotos.length > 0 && `(${talkingPhotos.length})`})
-        </button>
-      </div>
+      {loading ? (
+        <Loading
+          spinnerSrc="/assets/icons/spinner.svg"
+          text="Fetching Avatar"
+        />
+      ) : (
+        <div className="my-4 flex justify-around">
+          <button
+            className={`tab-button ${
+              activeTab === "avatars"
+                ? "border-blue-700 bg-blue-500 text-white shadow-lg"
+                : "border border-transparent bg-white text-blue-500"
+            } rounded-md px-4 py-2 transition-all duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-100`}
+            onClick={() => setActiveTab("avatars")}
+          >
+            Avatars ({avatars.length > 0 && `(${avatars.length})`})
+          </button>
+          <button
+            className={`tab-button ${
+              activeTab === "talkingPhotos"
+                ? "border-blue-700 bg-blue-500 text-white shadow-lg"
+                : "border border-transparent bg-white text-blue-500"
+            } rounded-md px-4 py-2 transition-all duration-300 ease-in-out hover:border-blue-500 hover:bg-blue-100`}
+            onClick={() => setActiveTab("talkingPhotos")}
+          >
+            Talking Photos (
+            {talkingPhotos.length > 0 && `(${talkingPhotos.length})`})
+          </button>
+        </div>
+      )}
+
       <div className="space-y-8">
         {activeTab === "avatars" ? (
           <AvatarRender avatars={avatars} onSelect={handleCharacter} />

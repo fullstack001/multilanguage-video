@@ -51,3 +51,8 @@ export const getVideoList = async (): Promise<Video[]> => {
   const response = await heygenApi.get("/v1/video.list");
   return response.data.data.videos;
 };
+
+export const getTranslateLanguage = async (): Promise<string[]> => {
+  const response = await heygenApi.get("/v2/video_translate/target_languages");
+  return response.data.data.languages;
+};

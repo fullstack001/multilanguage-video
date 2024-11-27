@@ -19,14 +19,13 @@ const ContentStep = ({
   onPrev,
   videoData,
 }: {
-  videoData: { voice: object };
+  videoData: { voice: { input_text: string } };
   onNext: (data: { voice: object | null }) => void;
   onPrev: (data: { voice: object }) => void;
 }) => {
-  const [voice, setVoice] = useState<object | null>(videoData.voice || null);
   const [selectedVoice, setSelectedVoice] = useState<Voice | null>(null);
   const [voices, setVoices] = useState<Voice[]>([]);
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>(videoData.voice?.input_text || "");
   const [voiceType, setVoiceType] = useState<string>("text");
   const [selectedEmoji, setSelectedEmoji] = useState<string>("Friendly");
   const [speed, setSpeed] = useState<number>(1);
@@ -151,7 +150,8 @@ const ContentStep = ({
                             min="0.5"
                             max="1.5"
                             step="0.1"
-                            defaultValue="1"
+                            value={speed}
+                            onChange={(e) => setSpeed(Number(e.target.value))}
                             className="ml-2"
                           />
                         </label>
@@ -162,7 +162,8 @@ const ContentStep = ({
                             min="-50"
                             max="50"
                             step="1"
-                            defaultValue="0"
+                            value={pitch}
+                            onChange={(e) => setPitch(Number(e.target.value))}
                             className="ml-2"
                           />
                         </label>
@@ -185,14 +186,22 @@ const ContentStep = ({
                   />
                 </div>
               </div>
-              <div className="mt-10 text-sm md:mt-16  ">
+              <div className="mt-10 text-sm md:mt-16">
                 <textarea
                   value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  rows={10}
+                  onChange={(e) => {
+                    const newText = e.target.value;
+                    if (newText.length <= 2000) {
+                      setText(newText);
+                    }
+                  }}
                   className="h-auto w-full rounded-lg border bg-gray-700 p-2 text-white"
-                  placeholder="Enter your script here"
+                  placeholder="Enter your script here (max 2000 characters)"
                 ></textarea>
-                <p></p>
+                <p className="text-right text-gray-400">
+                  {text.length} / 2000 characters
+                </p>
               </div>
             </div>
           </div>

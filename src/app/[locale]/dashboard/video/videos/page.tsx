@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { getUserVideos, deleteVideo } from "@/lib/api/videoMamagement";
 import VideoPlayer from "@/components/VideoPlayer";
 import { VideoDetail } from "@/types/VideoDetail";
+import { Modal, Button } from "flowbite-react";
 import VideoPreview from "./VideoPreview";
 
 export default function VideosPage() {
@@ -14,10 +15,11 @@ export default function VideosPage() {
   const [selectedVideoTitle, setSelectedVideoTitle] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [videoToDelete, setVideoToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     fetchVideos();
-    const handleRefetchData = () => fetchVideos();
   }, []);
 
   const fetchVideos = async () => {
@@ -38,6 +40,7 @@ export default function VideosPage() {
   };
 
   const handleDownload = (video: VideoDetail) => {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>");
     const link = document.createElement("a");
     link.href = video.video_url;
 
@@ -53,23 +56,26 @@ export default function VideosPage() {
     document.body.removeChild(link);
   };
 
-  const handleDelete = async (videoId: string) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this video?",
-    );
-    if (!confirmDelete) return;
+  const confirmDelete = (videoId: string) => {
+    setVideoToDelete(videoId);
+    setModalOpen(true);
+  };
 
-    setDeleteLoading(videoId);
+  const handleDelete = async () => {
+    if (!videoToDelete) return;
+    setDeleteLoading(videoToDelete);
     try {
-      await deleteVideo(videoId);
-      setVideos(videos.filter((video) => video._id !== videoId));
-      if (selectedVideo?.id === videoId) {
+      await deleteVideo(videoToDelete);
+      setVideos(videos.filter((video) => video._id !== videoToDelete));
+      if (selectedVideo?.id === videoToDelete) {
         setSelectedVideo(null);
       }
     } catch (error) {
       console.error("Error deleting video:", error);
     } finally {
       setDeleteLoading(null);
+      setModalOpen(false);
+      setVideoToDelete(null);
     }
   };
 
@@ -120,12 +126,11 @@ export default function VideosPage() {
               <button
                 onClick={() => handleDownload(selectedVideo)}
                 className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                disabled={selectedVideo.status !== "ready"}
               >
                 Download
               </button>
               <button
-                onClick={() => handleDelete(selectedVideo.id)}
+                onClick={() => confirmDelete(selectedVideo.id)}
                 className={`rounded px-4 py-2 text-white ${
                   deleteLoading === selectedVideo.id
                     ? "bg-gray-400"
@@ -143,6 +148,33 @@ export default function VideosPage() {
           </div>
         )}
       </div>
+
+      {/* Modal for delete confirmation */}
+      <Modal show={modalOpen} onClose={() => setModalOpen(false)}>
+        <Modal.Header>Confirm Deletion</Modal.Header>
+        <Modal.Body>
+          <p>
+            Are you sure you want to delete this video? This action cannot be
+            undone.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            color="gray"
+            onClick={() => setModalOpen(false)}
+            disabled={!!deleteLoading}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="failure"
+            onClick={handleDelete}
+            disabled={!!deleteLoading}
+          >
+            {deleteLoading ? "Deleting..." : "Delete"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
