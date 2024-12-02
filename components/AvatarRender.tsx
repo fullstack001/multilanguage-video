@@ -65,9 +65,9 @@ export default function AvatarRender({
           className="modal-video"
           overlayClassName="modal-overlay"
         >
-          <div className="modal-content">
+          <div className="modal-content m-8">
             <button className="close-button" onClick={() => setIsOpen(false)}>
-              <FaTimes size={24} />
+              <FaTimes size={26} />
             </button>
             {/* Use <video> tag to prevent download and play directly */}
             <video controls autoPlay src={videoUrl} className="w-full" />

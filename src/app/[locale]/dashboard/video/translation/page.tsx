@@ -1,5 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import useCurrentLocale from "@/lib/hooks/useCurrentLocales";
+
 import {
   AiOutlineVideoCamera,
   AiOutlineDelete,
@@ -11,6 +14,7 @@ import { translateVideo } from "@/lib/api/translate";
 import { AxiosProgressEvent } from "axios";
 
 const VideoTranslatePage = () => {
+  const locale = useCurrentLocale();
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
   const [videoLink, setVideoLink] = useState<string>("");
@@ -246,6 +250,14 @@ const VideoTranslatePage = () => {
       >
         Translate
       </button>
+      {success && (
+        <div>
+          Translating video...
+          <br />
+          Check the translate status on{" "}
+          <Link href={`/${locale}/dashboard/video/videos`}>Vidoes</Link>
+        </div>
+      )}
     </div>
   );
 };

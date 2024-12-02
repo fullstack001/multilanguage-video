@@ -3,12 +3,14 @@ import Image from "next/image";
 
 import { Video } from "@/types/Video";
 import { VideoDetail } from "@/types/VideoDetail";
-import { getVideoDetail, getVideoList } from "@/lib/api/heygen";
+import { getVideoDetail } from "@/lib/api/heygen";
 
 export default function VideoPreview({
   video_id,
   setSelectedVideo,
+  originVideos,
 }: {
+  originVideos: Video[];
   video_id: string;
   setSelectedVideo: (videoDetail: VideoDetail, title: string) => void;
 }) {
@@ -19,8 +21,9 @@ export default function VideoPreview({
   useEffect(() => {
     const fetchVideoDetail = async (video_id: string) => {
       setLoading(true);
-      const videos = await getVideoList();
-      const currentVideo = videos.find((item) => item.video_id === video_id);
+      const currentVideo = originVideos.find(
+        (item) => item.video_id === video_id,
+      );
       setVideo(currentVideo);
       if (currentVideo.status === "completed") {
         const res = await getVideoDetail(video_id);
@@ -35,9 +38,8 @@ export default function VideoPreview({
 
   return (
     <div
-      className={`video-item cursor-pointer rounded-lg p-2 transition ${
-        video?.video_id ? "bg-gray-300" : "hover:bg-gray-200"
-      }`}
+      className={`video-item "bg-gray-300" : "hover:bg-gray-200" h-40 cursor-pointer rounded-lg p-2 transition
+      `}
       onClick={() => setSelectedVideo(vidoeDetail, video.video_title)}
     >
       {loading ? (

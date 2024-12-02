@@ -5,6 +5,7 @@ import { Voice } from "@/types/Voice";
 import { InteractiveAvatar } from "@/types/InteractiveAvatar";
 import { Video } from "@/types/Video";
 import { VideoDetail } from "@/types/VideoDetail";
+import { TranslatedVideo } from "@/types/TranslatedVideo";
 const baseUrl = "https://api.heygen.com";
 
 export const heygenApi = axios.create({
@@ -55,4 +56,11 @@ export const getVideoList = async (): Promise<Video[]> => {
 export const getTranslateLanguage = async (): Promise<string[]> => {
   const response = await heygenApi.get("/v2/video_translate/target_languages");
   return response.data.data.languages;
+};
+
+export const getTranslatedVideo = async (
+  transalte_id: string,
+): Promise<TranslatedVideo> => {
+  const response = await heygenApi.get(`/v2/video_translate/${transalte_id}`);
+  return response.data.data;
 };
