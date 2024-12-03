@@ -125,7 +125,7 @@ const VideoTranslatePage = () => {
             }`}
             onClick={() => setUploadOption("upload")}
           >
-            Upload Video
+            Video
           </button>
           <button
             className={`rounded-lg px-4 py-2 ${

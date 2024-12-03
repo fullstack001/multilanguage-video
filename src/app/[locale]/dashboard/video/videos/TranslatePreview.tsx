@@ -11,7 +11,7 @@ export default function TranslatePreview({
   setSelectedVideo,
 }: {
   video_translate_id: string;
-  setSelectedVideo: (videoDetail: VideoDetail, title: string) => void;
+  setSelectedVideo: (videoDetail: TranslatedVideo, title: string) => void;
 }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [video, setVideo] = useState<TranslatedVideo>(null);
@@ -30,7 +30,7 @@ export default function TranslatePreview({
     <div
       className={`video-item h-64 cursor-pointer rounded-lg bg-gray-300 p-2 transition hover:bg-gray-200
       `}
-      // onClick={() => setSelectedVideo(vidoeDetail, video.video_title)}
+      onClick={() => setSelectedVideo(video, video.title)}
     >
       {loading ? (
         <div className="flex h-32 items-center justify-center bg-gray-200 text-gray-500">

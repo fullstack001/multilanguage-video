@@ -13,6 +13,7 @@ import { getVideoList } from "@/lib/api/heygen";
 import VideoPreview from "./VideoPreview";
 import TranslatePreview from "./TranslatePreview";
 import { Video } from "@/types/Video";
+import { TranslatedVideo } from "@/types/TranslatedVideo";
 
 export default function VideosPage() {
   const [originVideos, setOriginVideos] = useState<Video[]>([]);
@@ -22,7 +23,9 @@ export default function VideosPage() {
   const [translates, setTransaltes] = useState<
     { _id: string; user: string; video_translate_id: string }[]
   >([]);
-  const [selectedVideo, setSelectedVideo] = useState<VideoDetail | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<
+    VideoDetail | TranslatedVideo | null
+  >(null);
   const [selectedVideoTitle, setSelectedVideoTitle] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
@@ -53,16 +56,15 @@ export default function VideosPage() {
     }
   };
 
-  const setVideo = (video: VideoDetail, title: string) => {
+  const setVideo = (video: VideoDetail | TranslatedVideo, title: string) => {
     setSelectedVideo(video);
     setSelectedVideoTitle(title);
   };
 
-  const handleDownload = (video: VideoDetail) => {
+  const handleDownload = (video: VideoDetail | TranslatedVideo) => {
     const link = document.createElement("a");
-    link.href = video.video_url;
+    link.href = "video_translate_id" in video ? video.url : video.video_url;
 
-    // Create a file name using video_name or video_id, and ensure it has a .mp4 extension
     let fileName = selectedVideoTitle.trim();
     if (!fileName.toLowerCase().endsWith(".mp4")) {
       fileName += ".mp4";
@@ -85,7 +87,12 @@ export default function VideosPage() {
     try {
       await deleteVideo(videoToDelete);
       setVideos(videos.filter((video) => video._id !== videoToDelete));
-      if (selectedVideo?.id === videoToDelete) {
+      const videoId =
+        "video_translate_id" in selectedVideo
+          ? selectedVideo.video_translate_id
+          : selectedVideo.id;
+
+      if (videoId === videoToDelete) {
         setSelectedVideo(null);
       }
     } catch (error) {
@@ -153,9 +160,14 @@ export default function VideosPage() {
             <h2 className="mb-4 text-xl font-bold text-gray-800">
               {selectedVideoTitle}
             </h2>
-            {selectedVideo.status === "completed" ? (
+            {selectedVideo.status === "completed" ||
+            selectedVideo.status === "success" ? (
               <VideoPlayer
-                streamUrl={selectedVideo.video_url}
+                streamUrl={
+                  "video_translate_id" in selectedVideo
+                    ? selectedVideo.url
+                    : selectedVideo.video_url
+                }
                 title={selectedVideoTitle}
               />
             ) : (
@@ -171,15 +183,34 @@ export default function VideosPage() {
                 Download
               </button>
               <button
-                onClick={() => confirmDelete(selectedVideo.id)}
+                onClick={() =>
+                  confirmDelete(
+                    "video_translate_id" in selectedVideo
+                      ? selectedVideo.video_translate_id
+                      : selectedVideo.id,
+                  )
+                }
                 className={`rounded px-4 py-2 text-white ${
-                  deleteLoading === selectedVideo.id
+                  deleteLoading ===
+                  ("video_translate_id" in selectedVideo
+                    ? selectedVideo.video_translate_id
+                    : selectedVideo.id)
                     ? "bg-gray-400"
                     : "bg-red-500 hover:bg-red-600"
                 }`}
-                disabled={deleteLoading === selectedVideo.id}
+                disabled={
+                  deleteLoading ===
+                  ("video_translate_id" in selectedVideo
+                    ? selectedVideo.video_translate_id
+                    : selectedVideo.id)
+                }
               >
-                {deleteLoading === selectedVideo.id ? "Deleting..." : "Delete"}
+                {deleteLoading ===
+                ("video_translate_id" in selectedVideo
+                  ? selectedVideo.video_translate_id
+                  : selectedVideo.id)
+                  ? "Deleting..."
+                  : "Delete"}
               </button>
             </div>
           </div>
